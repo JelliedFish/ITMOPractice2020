@@ -1,45 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/MainScreen/presenter/MainScreenPresenter.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 
 
 class MainScreenView extends StatelessWidget {
+  var _mainScreenPresenter;
+
+  MainScreenView.presenter(MainScreenPresenter mainScreenPresenter){
+    this._mainScreenPresenter = mainScreenPresenter;
+  }
+  MainScreenView(){}
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      home: HomePage(),
+      home: HomePage(_mainScreenPresenter),
     );
   }
 }
 
 
-var math = FlatButton(
-  textColor: Colors.white,
 
-  onPressed: () {
-    /*...*/
-  },
-  child: Text(
-    "Математика",
-    style: TextStyle(fontSize: 27.0),
-  ),
-);
 
-var russian = FlatButton(
-  textColor: Colors.white,
 
-  onPressed: () {
+class HomePage extends MainScreenView {
 
-  },
-    child: Text(
-    "Русский",
-    style: TextStyle(fontSize: 27.0),
-  ),
-);
 
-class HomePage extends StatelessWidget {
+  HomePage(MainScreenPresenter mainScreenPresenter){
+    this._mainScreenPresenter = mainScreenPresenter;
+  }
 
   @override
   Widget build(BuildContext context){
@@ -57,7 +48,28 @@ class HomePage extends StatelessWidget {
               child : Container(
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [math,russian],
+                children: [FlatButton(
+                textColor: Colors.white,
+
+                onPressed: () {
+                  _mainScreenPresenter.goToCatalogRussian(context);
+                },
+                child: Text(
+                  "Русский",
+                  style: TextStyle(fontSize: 27.0),
+                ),
+              )
+                ,FlatButton(
+                    textColor: Colors.white,
+
+                    onPressed: () {
+                        _mainScreenPresenter.goToCatalogMath(context);
+                    },
+                    child: Text(
+                      "Математика",
+                      style: TextStyle(fontSize: 27.0),
+                    ),
+                  )],
               ),
             ),
               ),

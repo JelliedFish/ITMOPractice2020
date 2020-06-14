@@ -1,16 +1,20 @@
 
 
+import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 import 'package:flutterapp/MainScreen/presenter/MainScreenPresenter.dart';
 
 class MainPresenter{
 
-  var mainScreenPresenter;
+  var _mainScreenPresenter;
+  var _catalogPresenter;
+
+  get mainScreenPresenter => _mainScreenPresenter;
+  get catalogPresenter => _catalogPresenter;
 
   MainPresenter(){
-    mainScreenPresenter = MainScreenPresenter();
+    _mainScreenPresenter = MainScreenPresenter(this);
+    _catalogPresenter = CatalogPresenter();
   }
-
-
 }
 
 
