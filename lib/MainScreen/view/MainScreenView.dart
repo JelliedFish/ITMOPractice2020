@@ -43,7 +43,7 @@ class HomePage extends MainScreenView {
                 gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                colors: [Colors.deepPurple,Colors.redAccent])),
+                colors: [Colors.redAccent,Colors.deepPurple])),
             child: Center(
               child : Container(
               child: new Column(
