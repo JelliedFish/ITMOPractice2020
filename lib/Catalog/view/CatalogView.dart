@@ -10,11 +10,7 @@ import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 
 class CatalogView extends StatelessWidget{
   var _catalogPresenter;
-  var _state;
 
-  set state(value) {
-    _state = value;
-  }
 
   Row createFirstElement(BuildContext context) {
     return Row(
@@ -24,7 +20,7 @@ class CatalogView extends StatelessWidget{
 
             children: <Widget>[Container(
               child: IconButton(
-                color: Colors.redAccent,
+                color: _catalogPresenter.catalogModel.color,
                 icon: Icon(Icons.highlight_off),
                 iconSize: 30,
                 onPressed: () {
@@ -41,7 +37,7 @@ class CatalogView extends StatelessWidget{
 
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[Container(child: Text(
-              "50 из 600",
+              _catalogPresenter.catalogModel.amountOfAnswers,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -53,7 +49,7 @@ class CatalogView extends StatelessWidget{
               alignment: Alignment.center,
               padding: EdgeInsets.only(left: 10.0),
               decoration: BoxDecoration(
-                color: Colors.redAccent,
+                color: _catalogPresenter.catalogModel.color,
                 border: new Border(),
                 borderRadius: new BorderRadius.only(
                     topLeft: Radius.circular(15.0),
@@ -82,7 +78,7 @@ class CatalogView extends StatelessWidget{
               child: FlatButton(
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
             textColor: Colors.white,
-            color: Colors.redAccent,
+            color: _catalogPresenter.catalogModel.color,
             splashColor: Colors.white,
             onPressed: (){
 
