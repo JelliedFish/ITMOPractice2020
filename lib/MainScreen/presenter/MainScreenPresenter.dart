@@ -22,7 +22,7 @@ class MainScreenPresenter {
     _mainPresenter.catalogPresenter.state = "Math";
     _mainPresenter.catalogPresenter.loadColorOfModel();
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => _mainPresenter.catalogPresenter.catalogView),
+        MaterialPageRoute(builder: (context) => _mainPresenter.mainPresenterView),
     );
   }
 
@@ -31,7 +31,7 @@ class MainScreenPresenter {
     _mainPresenter.catalogPresenter.loadColorOfModel();
 
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => _mainPresenter.catalogPresenter.catalogView),
+        MaterialPageRoute(builder: (context) => _mainPresenter.mainPresenterView),
     );
   }
 
