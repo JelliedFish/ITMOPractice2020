@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'file:///C:/Users/hungr_000/StudioProjects/flutter_app/lib/MainScreen/view/MainScreenView.dart';
+import 'package:flutterapp/MainScreen/view/MainScreenView.dart';
 
 import 'package:flutterapp/MainScreen/presenter/MainScreenPresenter.dart';
 

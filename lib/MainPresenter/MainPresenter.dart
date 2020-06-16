@@ -1,5 +1,3 @@
-
-
 import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 import 'package:flutterapp/MainScreen/presenter/MainScreenPresenter.dart';
 
