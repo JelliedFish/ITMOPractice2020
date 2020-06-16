@@ -72,21 +72,18 @@ class CatalogView extends StatelessWidget {
           children: <Widget>[
             ButtonTheme(
                 height: 45,
-                minWidth: 120,
+                minWidth: 140,
                   child: FlatButton(
                     onPressed: () {},
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    padding: EdgeInsets.all(0.0),
+                    padding: EdgeInsets.only(bottom: 10.0, top: 5.0),
                     child: Ink(
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [Color(0xff9F77BF), Color(0xff8322A7)],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
+                        color: _catalogPresenter.catalogModel.color,
                           borderRadius: BorderRadius.circular(30.0)
                       ),
                       child: Container(
-                        constraints: BoxConstraints(maxWidth: 120.0, minHeight: 45.0),
+                        constraints: BoxConstraints(maxWidth: 140.0, minHeight: 45.0),
                         alignment: Alignment.center,
                         child: Text(
                           "Варианты",
@@ -102,8 +99,9 @@ class CatalogView extends StatelessWidget {
             ),
             ButtonTheme(
                 height: 45,
-                minWidth: 120,
+                minWidth: 140,
                 child: FlatButton(
+                    padding: EdgeInsets.only(bottom: 10.0, top: 5.0),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     textColor: Colors.black,
@@ -172,9 +170,9 @@ class CatalogView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: <Widget>[
-        new Expanded(child: createFirstElement(context), flex: 1),
-        new Expanded(child: createSecondElement(), flex: 1),
-        new Expanded(child: buildGridView(context), flex: 10)
+        new Expanded(child: createFirstElement(context), flex: 3),
+        new Expanded(child: createSecondElement(), flex: 4),
+        new Expanded(child: buildGridView(context), flex: 22)
       ]),
     );
   }
