@@ -4,11 +4,27 @@ import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
 import 'package:flutterapp/Catalog/view/VariantItem.dart';
 import 'package:flutterapp/liquid_progress_indicator/liquid_progress_indicator.dart';
 
-class CatalogView extends StatelessWidget {
+class CatalogView extends StatefulWidget {
   var _catalogPresenter;
 
   CatalogView(CatalogPresenter catalogPresenter) {
     this._catalogPresenter = catalogPresenter;
+  }
+
+  @override
+  State<StatefulWidget> createState() => CatalogViewState(_catalogPresenter);
+}
+
+class CatalogViewState extends State<CatalogView> {
+  var _catalogPresenter;
+  List<bool> isSelected;
+
+  CatalogViewState(this._catalogPresenter);
+
+  @override
+  void initState() {
+    isSelected = [true, false];
+    super.initState();
   }
 
   Container createFirstElement(BuildContext context) {
@@ -66,67 +82,54 @@ class CatalogView extends StatelessWidget {
   Widget createSecondElement() {
     return Container(
       padding: EdgeInsets.only(top: 30),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            ButtonTheme(
-                height: 45,
-                minWidth: 140,
-                  child: FlatButton(
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    padding: EdgeInsets.only(bottom: 10.0, top: 5.0),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        color: _catalogPresenter.catalogModel.color,
-                          borderRadius: BorderRadius.circular(30.0)
-                      ),
-                      child: Container(
-                        constraints: BoxConstraints(maxWidth: 140.0, minHeight: 45.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Варианты",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                          ),
-                        ),
-                      ),
+      child: ToggleButtons(
+        borderRadius: BorderRadius.all(Radius.circular(80)),
+        borderColor: Colors.white70,
+        fillColor: _catalogPresenter.catalogModel.color,
+        selectedColor: Colors.white,
+        children: <Widget>[
+          Container(
+              width: 150,
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      'Варианты',
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ),
+                  ))),
+          Container(
+            width: 150,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'По заданиям',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
             ),
-            ButtonTheme(
-                height: 45,
-                minWidth: 140,
-                child: FlatButton(
-                    padding: EdgeInsets.only(bottom: 10.0, top: 5.0),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
-                    textColor: Colors.black,
-                    color: Colors.white24,
-                    onPressed: () {},
-                    child: Text("По заданиям", style: TextStyle(fontSize: 20))))
-          ]),
+          ),
+        ],
+        onPressed: (int index) {
+          setState(() {
+            for (int buttonIndex = 0;
+                buttonIndex < isSelected.length;
+                buttonIndex++) {
+              if (buttonIndex == index) {
+                isSelected[buttonIndex] = true;
+              } else {
+                isSelected[buttonIndex] = false;
+              }
+            }
+          });
+        },
+        isSelected: isSelected,
+      ),
     );
   }
 
   Widget buildGridView(BuildContext context) {
-    var variants = <Widget>[
-      LiquidCircularProgressIndicator(
-        value: 0.2,
-        valueColor: AlwaysStoppedAnimation(Color(0xFFB0AB)),
-        backgroundColor: Color(0xD5D4D3),
-        direction: Axis.vertical,
-      ),
-      LiquidCircularProgressIndicator(
-        value: 0.5,
-        valueColor: AlwaysStoppedAnimation(Color(0xFFB0AB)),
-        backgroundColor: Color(0xD5D4D3),
-        direction: Axis.vertical,
-      )
-    ];
     return Container(
       padding: EdgeInsets.only(top: 5),
       child: GridView.count(
@@ -159,11 +162,11 @@ class CatalogView extends StatelessWidget {
           new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
           new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
           new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-
         ],
       ),
     );
   }
+
   //
 
   @override
