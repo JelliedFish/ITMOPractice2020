@@ -1,40 +1,53 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Catalog/model/CatalogModel.dart';
 import 'package:flutterapp/Catalog/view/CatalogView.dart';
 
-class CatalogPresenter{
-   var _catalogView;
+class CatalogPresenter {
+  var _catalogView;
+  var _catalogModel;
+  var _state;
 
+  get catalogModel => _catalogModel;
 
-  CatalogPresenter(){
+  set state(value) {
+    _state = value;
+  }
 
+  CatalogPresenter() {
     _catalogView = CatalogView(this);
+    _catalogModel = CatalogModel(this);
   }
 
   get catalogView => _catalogView;
 
 
-  Text mathOrRussian(String s){
-//
-    switch (s) {
+//TODO: You can create method which has returned Widget and it is based on _state
+
+  void loadColorOfModel() {
+    switch (_state) {
       case "Russian":
         {
-          return Text("Это каталог Русского");
+          _catalogModel.color = Colors.deepPurple;
         }
         break;
 
       case "Math":
         {
-          return Text("Это каталог Математики");
+          _catalogModel.color = Colors.redAccent;
         }
         break;
 
-      default:
-        {
-          return Text("Ошибка, не выбран каталог");
-        }
+      default: {
+    _catalogModel.color = Colors.redAccent;
     }
+  }
+}
+
+
+  void goBack(BuildContext context){
+    Navigator.pop(context);
   }
 
 }
