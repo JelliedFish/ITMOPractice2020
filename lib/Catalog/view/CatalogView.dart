@@ -17,13 +17,20 @@ class CatalogView extends StatefulWidget {
 
 class CatalogViewState extends State<CatalogView> {
   var _catalogPresenter;
-  List<bool> isSelected;
+  List<bool> _isSelected;
+  int _fIndex = 0;
+  var fragments = new List<Widget>(2);
 
-  CatalogViewState(this._catalogPresenter);
+  CatalogViewState(CatalogPresenter catalogPresenter){
+
+    _catalogPresenter = catalogPresenter;
+    fragments[0] = this._catalogPresenter.variantsPresenter.variantsView;
+    fragments[1] = this._catalogPresenter.tasksPresenter.tasksView;
+  }
 
   @override
   void initState() {
-    isSelected = [true, false];
+    _isSelected = [true, false];
     super.initState();
   }
 
@@ -113,18 +120,19 @@ class CatalogViewState extends State<CatalogView> {
         ],
         onPressed: (int index) {
           setState(() {
+            _fIndex = index;
             for (int buttonIndex = 0;
-                buttonIndex < isSelected.length;
+                buttonIndex < _isSelected.length;
                 buttonIndex++) {
               if (buttonIndex == index) {
-                isSelected[buttonIndex] = true;
+                _isSelected[buttonIndex] = true;
               } else {
-                isSelected[buttonIndex] = false;
+                _isSelected[buttonIndex] = false;
               }
             }
           });
         },
-        isSelected: isSelected,
+        isSelected: _isSelected,
       ),
     );
   }
@@ -175,7 +183,7 @@ class CatalogViewState extends State<CatalogView> {
       body: Column(children: <Widget>[
         new Expanded(child: createFirstElement(context), flex: 3),
         new Expanded(child: createSecondElement(), flex: 4),
-        new Expanded(child: buildGridView(context), flex: 22)
+        new Expanded(child: fragments[_fIndex], flex: 22)
       ]),
     );
   }
