@@ -14,7 +14,7 @@ class CatalogView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => CatalogViewState(_catalogPresenter);
 }
-
+//
 class CatalogViewState extends State<CatalogView> {
   var _catalogPresenter;
   List<bool> _isSelected;
