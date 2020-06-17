@@ -20,7 +20,7 @@ class MainScreenPresenter {
 
   void goToCatalogMath(BuildContext context){
     _mainPresenter.catalogPresenter.state = "Math";
-    _mainPresenter.catalogPresenter.loadColorOfModel();
+    _mainPresenter.catalogPresenter.loadCatalogModel();
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => _mainPresenter.mainPresenterView),
     );
@@ -28,7 +28,7 @@ class MainScreenPresenter {
 
   void goToCatalogRussian(BuildContext context){
     _mainPresenter.catalogPresenter.state = "Russian";
-    _mainPresenter.catalogPresenter.loadColorOfModel();
+    _mainPresenter.catalogPresenter.loadCatalogModel();
 
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => _mainPresenter.mainPresenterView),

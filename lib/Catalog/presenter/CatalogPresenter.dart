@@ -5,11 +5,14 @@ import 'package:flutterapp/Catalog/model/CatalogModel.dart';
 import 'package:flutterapp/Catalog/tasks/presenter/TasksPresenter.dart';
 import 'package:flutterapp/Catalog/variants/presenter/VariantsPresenter.dart';
 import 'package:flutterapp/Catalog/view/CatalogView.dart';
+import 'package:flutterapp/MainPresenter/MainPresenter.dart';
 
 class CatalogPresenter {
   var _variantsPresenter;
   var _tasksPresenter;
+  var _mainPresenter;
 
+  get mainPresenter => _mainPresenter;
   var _catalogView;
   var _catalogModel;
   var _state;
@@ -22,7 +25,8 @@ class CatalogPresenter {
     _state = value;
   }
 
-  CatalogPresenter() {
+  CatalogPresenter(MainPresenter mainPresenter) {
+    _mainPresenter = mainPresenter;
     _catalogView = CatalogView(this);
     _catalogModel = CatalogModel(this);
     _variantsPresenter = VariantsPresenter();
@@ -34,17 +38,19 @@ class CatalogPresenter {
 
 //TODO: You can create method which has returned Widget and it is based on _state
 
-  void loadColorOfModel() {
+  void loadCatalogModel() {
     switch (_state) {
       case "Russian":
         {
-          _catalogModel.color = Colors.deepPurple;
+          _mainPresenter.mainPresenterModel.themeColor = Colors.deepPurple;
+          _mainPresenter.mainPresenterModel.amountOfTasks = 26;
         }
         break;
 
       case "Math":
         {
-          _catalogModel.color = Colors.redAccent;
+          _mainPresenter.mainPresenterModel.themeColor = Colors.redAccent;
+          _mainPresenter.mainPresenterModel.amountOfTasks = 12;
         }
         break;
 

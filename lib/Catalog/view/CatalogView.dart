@@ -44,7 +44,7 @@ class CatalogViewState extends State<CatalogView> {
               children: <Widget>[
                 Container(
                   child: IconButton(
-                    color: _catalogPresenter.catalogModel.color,
+                    color: _catalogPresenter.mainPresenter.mainPresenterModel.themeColor,
                     icon: Icon(Icons.highlight_off),
                     iconSize: 30,
                     onPressed: () {
@@ -69,7 +69,7 @@ class CatalogViewState extends State<CatalogView> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 10.0),
                   decoration: BoxDecoration(
-                    color: _catalogPresenter.catalogModel.color,
+                    color: _catalogPresenter.mainPresenter.mainPresenterModel.themeColor,
                     border: new Border(),
                     borderRadius: new BorderRadius.only(
                         topLeft: Radius.circular(15.0),
@@ -92,7 +92,7 @@ class CatalogViewState extends State<CatalogView> {
       child: ToggleButtons(
         borderRadius: BorderRadius.all(Radius.circular(80)),
         borderColor: Colors.white70,
-        fillColor: _catalogPresenter.catalogModel.color,
+        fillColor: _catalogPresenter.mainPresenter.mainPresenterModel.themeColor,
         selectedColor: Colors.white,
         children: <Widget>[
           Container(
