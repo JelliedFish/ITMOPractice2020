@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/model/CatalogModel.dart';
 import 'package:flutterapp/Catalog/tasks/presenter/TasksPresenter.dart';
@@ -18,7 +16,9 @@ class CatalogPresenter {
   var _state;
 
   get catalogModel => _catalogModel;
+
   get variantsPresenter => _variantsPresenter;
+
   get tasksPresenter => _tasksPresenter;
 
   set state(value) {
@@ -29,12 +29,11 @@ class CatalogPresenter {
     _mainPresenter = mainPresenter;
     _catalogView = CatalogView(this);
     _catalogModel = CatalogModel(this);
-    _variantsPresenter = VariantsPresenter();
+    _variantsPresenter = VariantsPresenter(this);
     _tasksPresenter = TasksPresenter();
   }
 
   get catalogView => _catalogView;
-
 
 //TODO: You can create method which has returned Widget and it is based on _state
 
@@ -54,14 +53,20 @@ class CatalogPresenter {
         }
         break;
 
-      default: {
-    _catalogModel.color = Colors.redAccent;
+      default:
+        {
+          _catalogModel._color = Colors.redAccent;
+        }
     }
   }
-}
 
+  void goToTest(BuildContext context){
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => _mainPresenter.testPresenter.testView),
+    );
+  }
 
-  void goBack(BuildContext context){
+  void goBack(BuildContext context) {
     Navigator.pop(context);
   }
 }

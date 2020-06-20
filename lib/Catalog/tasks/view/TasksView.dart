@@ -24,18 +24,7 @@ class TasksView extends StatelessWidget{
       child: GridView.count(
         crossAxisCount: 3,
         children: <Widget>[
-          new Item(0.75, "1", Color.fromRGBO(239, 87, 83, 1)),
-          new Item(0.34, "2", Color.fromRGBO(131, 34, 167, 1)),
-          new Item(0.34, "3", Color.fromRGBO(131, 34, 167, 1)),
-          new Item(0.75, "4", Color.fromRGBO(239, 87, 83, 1)),
-          new Item(0.34, "5", Color.fromRGBO(131, 34, 167, 1)),
-          new Item(0.34, "6", Color.fromRGBO(131, 34, 167, 1)),
-          new Item(0.75, "7", Color.fromRGBO(239, 87, 83, 1)),
-          new Item(0.34, "8", Color.fromRGBO(131, 34, 167, 1)),
-          new Item(0.34, "9", Color.fromRGBO(131, 34, 167, 1)),
-          new Item(0.75, "10", Color.fromRGBO(239, 87, 83, 1)),
-          new Item(0.34, "11", Color.fromRGBO(131, 34, 167, 1)),
-          new Item(0.34, "12", Color.fromRGBO(131, 34, 167, 1)),
+
         ],
       ),
     );
