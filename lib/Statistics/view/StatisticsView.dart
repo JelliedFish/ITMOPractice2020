@@ -161,7 +161,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                 borderRadius: BorderRadius.all(
                   Radius.circular(0),
                 ),
-                color: Colors.white30),
+                color:  Color(0xff232d37)),
             child: Padding(
               padding: const EdgeInsets.only(right: 15.0, left: 0.0, top: 34, bottom: 12),
               child: LineChart(
@@ -182,7 +182,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             child: Text(
               'avg',
               style: TextStyle(
-                  fontSize: 15, color: showAvg ?  Colors.black: Colors.black.withOpacity(0.5), fontWeight: FontWeight.bold),
+                  fontSize: 15, color: showAvg ?  Colors.white: Colors.white.withOpacity(0.5), fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -193,7 +193,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
+        show: false,
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
@@ -248,17 +248,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
           ),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 1:
+              case 10:
                 return '10';
-              case 2:
+              case 20:
                 return '20';
-              case 3:
+              case 30:
                 return '30';
-              case 4:
+              case 40:
                 return '40';
-              case 5:
+              case 50:
                 return '50';
-              case 6:
+              case 62:
                 return '62';
             }
             return '';
@@ -270,20 +270,20 @@ class _LineChartSample2State extends State<LineChartSample2> {
       borderData:
       FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 12,
+      maxX: 13,
       minY: 0,
-      maxY: 6,
+      maxY: 62,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
-            FlSpot(12, 4),
+            FlSpot(0, 20),
+            FlSpot(2.6, 20),
+            FlSpot(4.9, 50),
+            FlSpot(6.8, 30.1),
+            FlSpot(8, 40),
+            FlSpot(9.5, 30),
+            FlSpot(11, 40),
+            FlSpot(12, 40),
           ],
           isCurved: true,
           colors: gradientColors,
@@ -305,8 +305,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return LineChartData(
       lineTouchData: LineTouchData(enabled: false),
       gridData: FlGridData(
-        show: true,
-        drawHorizontalLine: true,
+        show: false,
+        drawHorizontalLine: false,
         getDrawingVerticalLine: (value) {
           return FlLine(
             color: const Color(0xff37434d),
@@ -360,17 +360,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
           ),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 1:
+              case 10:
                 return '10';
-              case 2:
+              case 20:
                 return '20';
-              case 3:
+              case 30:
                 return '30';
-              case 4:
+              case 40:
                 return '40';
-              case 5:
+              case 50:
                 return '50';
-              case 6:
+              case 62:
                 return '62';
             }
             return '';
@@ -384,18 +384,18 @@ class _LineChartSample2State extends State<LineChartSample2> {
       minX: 0,
       maxX: 12,
       minY: 0,
-      maxY: 6,
+      maxY: 62,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
-            FlSpot(4.9, 3.44),
-            FlSpot(6.8, 3.44),
-            FlSpot(8, 3.44),
-            FlSpot(9.5, 3.44),
-            FlSpot(11, 3.44),
-            FlSpot(12, 3.44),
+            FlSpot(0, 30.44),
+            FlSpot(2.6, 30.44),
+            FlSpot(4.9, 30.44),
+            FlSpot(6.8, 30.44),
+            FlSpot(8, 30.44),
+            FlSpot(9.5, 30.44),
+            FlSpot(11, 30.44),
+            FlSpot(12, 30.44),
           ],
           isCurved: true,
           colors: [
