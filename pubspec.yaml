@@ -23,8 +23,11 @@ environment:
 dependencies:
   gradient_app_bar: ^0.1.3
   flutter_svg: ^0.17.4
+  sliding_up_panel: ^1.0.2
+  imagebutton: ^0.0.6
   flutter:
     sdk: flutter
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -78,3 +81,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: EgeHelper
+      fonts:
+        - asset: assets/fonts/EgeHelper.ttf
