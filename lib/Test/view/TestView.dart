@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -5,12 +7,43 @@ import 'package:flutterapp/Test/presenter/TestPresenter.dart';
 import 'package:flutterapp/assets/ege_helper_icons.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class TestView extends StatelessWidget {
+class TestView extends StatefulWidget {
+  var _testPresenter;
+  int _hours;
+  int _seconds;
+
+  TestView(this._testPresenter, this._hours, this._seconds);
+
+  @override
+  State<StatefulWidget> createState() =>
+      _TestViewState(_testPresenter, _hours, _seconds);
+}
+
+class _TestViewState extends State<TestView> {
   var _testPresenter;
   PanelController _pc = new PanelController();
+  int _hours;
+  int _seconds;
+  Timer _timer;
 
-  TestView(TestPresenter testPresenter) {
-    _testPresenter = testPresenter;
+  _TestViewState(this._testPresenter, this._hours, this._seconds);
+
+  void _startTimer() {
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_seconds > 0) {
+          _seconds--;
+        } else if (_hours > 0) {
+          _hours--;
+          _seconds = 59;
+        } else {
+          _timer.cancel();
+        }
+      });
+    });
   }
 
   Container createFirstElement(BuildContext context) {
@@ -34,16 +67,27 @@ class TestView extends StatelessWidget {
                   padding: EdgeInsets.only(left: 5),
                 ),
                 Container(
-                  child: IconButton(
-                    color: _testPresenter
-                        .mainPresenter.mainPresenterModel.themeColor,
-                    icon: Icon(EgeHelper.logo),
-                    iconSize: 30,
-                    onPressed: () {
-                      this._testPresenter.goBack(context);
-                    },
+                  width: 80,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: _testPresenter
+                          .mainPresenter.mainPresenterModel.themeColor,
+                    ),
                   ),
-                  padding: EdgeInsets.only(left: 5),
+                  child: Center(child: Text('$_hours : $_seconds')),
+                ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  child: InkWell(
+                    onTap: () {},
+                  ),
+                  decoration: BoxDecoration(
+                    image: new DecorationImage(
+                        image: new AssetImage('assets/images/logo.png')),
+                  ),
                 )
               ],
             ),
@@ -103,6 +147,7 @@ class TestView extends StatelessWidget {
         new Expanded(
           child: IconButton(
             onPressed: () {
+              _testPresenter.goToSignature(context);
             },
             icon: Icon(
               EgeHelper.pencil,
@@ -141,27 +186,25 @@ class TestView extends StatelessWidget {
     );
   }
 
-  Widget _floatingPanel(){
+  Widget _floatingPanel() {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20)),
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           boxShadow: [
             BoxShadow(
               blurRadius: 20.0,
               color: Colors.grey,
             ),
-          ]
-      ),
+          ]),
       child: Center(
         child: Text("This is the SlidingUpPanel when open"),
       ),
     );
   }
 
-  Widget createTest(BuildContext context){
+  Widget createTest(BuildContext context) {
     return SlidingUpPanel(
       controller: _pc,
       body: Column(children: <Widget>[
@@ -177,17 +220,18 @@ class TestView extends StatelessWidget {
           ),
           flex: 9,
         ),
-      ]
-      ),
+      ]),
       panel: _floatingPanel(),
       minHeight: 0,
     );
   }
+
   @override
   Widget build(BuildContext context) {
+    _startTimer();
     Widget test = createTest(context);
     return Scaffold(
-        body: test,
+      body: test,
     );
   }
 }

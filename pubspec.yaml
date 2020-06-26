@@ -85,3 +85,6 @@ flutter:
     - family: EgeHelper
       fonts:
         - asset: assets/fonts/EgeHelper.ttf
+  assets:
+    - assets/images/logo.png
+
