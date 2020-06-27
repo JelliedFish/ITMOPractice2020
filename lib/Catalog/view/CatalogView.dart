@@ -44,7 +44,7 @@ class CatalogViewState extends State<CatalogView> {
               children: <Widget>[
                 Container(
                   child: IconButton(
-                    color: _catalogPresenter.mainPresenter.mainPresenterModel.themeColor,
+                    color: _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
                     icon: Icon(Icons.highlight_off),
                     iconSize: 30,
                     onPressed: () {
@@ -59,6 +59,8 @@ class CatalogViewState extends State<CatalogView> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(
+
+
                   child: Text(
                     _catalogPresenter.catalogModel.amountOfAnswers,
                     style: TextStyle(
@@ -69,7 +71,15 @@ class CatalogViewState extends State<CatalogView> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 10.0),
                   decoration: BoxDecoration(
-                    color: _catalogPresenter.mainPresenter.mainPresenterModel.themeColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                    color: _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
                     border: new Border(),
                     borderRadius: new BorderRadius.only(
                         topLeft: Radius.circular(15.0),
@@ -89,13 +99,17 @@ class CatalogViewState extends State<CatalogView> {
   Widget createSecondElement() {
     return Container(
       padding: EdgeInsets.only(top: 30),
-      child: ToggleButtons(
+      child:
+      Container(
+
+        child: ToggleButtons(
         borderRadius: BorderRadius.all(Radius.circular(80)),
         borderColor: Colors.white70,
-        fillColor: _catalogPresenter.mainPresenter.mainPresenterModel.themeColor,
+        fillColor: _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
         selectedColor: Colors.white,
         children: <Widget>[
           Container(
+
               width: 150,
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -134,7 +148,7 @@ class CatalogViewState extends State<CatalogView> {
         },
         isSelected: _isSelected,
       ),
-    );
+    ));
   }
 
   Widget buildGridView(BuildContext context) {
@@ -143,33 +157,33 @@ class CatalogViewState extends State<CatalogView> {
       child: GridView.count(
         crossAxisCount: 3,
         children: <Widget>[
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.75, Color.fromRGBO(239, 87, 83, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
-          new VariantItem(0.34, Color.fromRGBO(131, 34, 167, 1)),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
+          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
         ],
       ),
     );

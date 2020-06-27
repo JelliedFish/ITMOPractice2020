@@ -41,14 +41,16 @@ class CatalogPresenter {
     switch (_state) {
       case "Russian":
         {
-          _mainPresenter.mainPresenterModel.themeColor = Colors.deepPurple;
+          _mainPresenter.mainPresenterModel.themeColorEnd = Color(0xff8323A7);
+          _mainPresenter.mainPresenterModel.themeColorStart = Color(0xffC9A8E8);
           _mainPresenter.mainPresenterModel.amountOfTasks = 26;
         }
         break;
 
       case "Math":
         {
-          _mainPresenter.mainPresenterModel.themeColor = Colors.redAccent;
+          _mainPresenter.mainPresenterModel.themeColorEnd = Color(0xffF05D59);
+          _mainPresenter.mainPresenterModel.themeColorStart = Color(0xffFFA798);
           _mainPresenter.mainPresenterModel.amountOfTasks = 12;
         }
         break;

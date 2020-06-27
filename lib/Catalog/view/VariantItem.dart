@@ -7,6 +7,7 @@ class VariantItem extends StatefulWidget {
   final Color color;
 
 
+
   VariantItem(this.value, this.color);
 
   @override
@@ -55,7 +56,7 @@ class VariantItemState
         child: LiquidCustomProgressIndicator(
         value: value,
         direction: Axis.vertical,
-        backgroundColor: Color.fromRGBO(213, 212, 211, 0.33),
+        backgroundColor: color,
         valueColor: AlwaysStoppedAnimation(color),
         shapePath: _buildHeartPath(),
         center: Text(

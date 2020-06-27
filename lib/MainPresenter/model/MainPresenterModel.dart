@@ -5,7 +5,14 @@ import 'package:flutterapp/MainPresenter/MainPresenter.dart';
 
 class MainPresenterModel {
   var _amountOfTasks;
-  var _themeColor;
+  var _themeColorStart;
+  var _themeColorEnd;
+
+  get themeColorEnd => _themeColorEnd;
+
+  set themeColorEnd(value) {
+    _themeColorEnd = value;
+  }
 
   get amountOfTasks => _amountOfTasks;
 
@@ -20,9 +27,9 @@ class MainPresenterModel {
     _mainPresenter = mainPresenter;
   }
 
-  get themeColor => _themeColor;
+  get themeColorStart => _themeColorStart;
 
-  set themeColor(value) {
-    _themeColor = value;
+  set themeColorStart(value) {
+    _themeColorStart = value;
   }
 }

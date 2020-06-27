@@ -62,7 +62,7 @@ class _MainPresenterView extends State<MainPresenterView> {
             ),
             BottomNavigationBarItem(
                 icon: Icon(Icons.timer),
-                title: new Text('Блитц')
+                title: new Text('Блиц')
             )
           ],
           onTap: (index){

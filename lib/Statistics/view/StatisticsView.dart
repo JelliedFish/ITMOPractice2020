@@ -17,36 +17,129 @@ class StatisticsView extends StatelessWidget {
   }
 
 
-  Widget createFactElement(){
+  Widget createFactAndLevelElement(BuildContext context){
     return Scaffold(
 
       body: Container(
-      padding: EdgeInsets.only(top: 50, left: 30),
+      padding: EdgeInsets.only(top : 45),
         child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Text("Факт дня")
-        ],
+          Container(
+
+
+              height: 50,
+              width: 135,
+
+
+              decoration: BoxDecoration(
+
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [ _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorStart, _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorEnd]
+                ),
+                color: _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child : FlatButton(
+              shape:  RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20.0)),
+                  color: Colors.transparent,
+
+
+              child : Center( child : Text("Факт дня", style: TextStyle(fontSize: 15, color: Colors.white)),
+            ),
+            onPressed: (){
+              showDialog(context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context){
+
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  title: Text("Факт:"),
+                  content: Text("По статистике , если проверять задание во время выполнения, то количество ошибок уменьшается на 70%",textAlign: TextAlign.center),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('OK', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              }
+              );
+            }
+              )),
+
+        Container(
+            width: 135,
+            height: 50,
+
+
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [ _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorStart, _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorEnd]
+              ),
+              color: _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+
+            child: FlatButton(
+              shape:  RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20.0)),
+              padding: EdgeInsets.only(left: 5, right: 5),
+
+
+                  child : Center( child : Text("Уровень знаний", style: TextStyle(fontSize: 15, color: Colors.white)),
+                  ),
+              onPressed: (){
+                showDialog(context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context){
+
+                      return AlertDialog(
+                        backgroundColor: Colors.white,
+                        title: Text("Уровень знаний:"),
+                        content: Text("Твой уровень знаний - Начинающий !",textAlign: TextAlign.center),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('OK', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                );
+              }
+          ))
+        ])
       ),
-    ));
+    );
   }
 
-  Widget createLevelElement(){
-    return Scaffold(
-
-      body: Container(
-        padding: EdgeInsets.only(right: 70),
-       child : Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Text("Уровень знаний")
-        ],
-      ),
-    ));
-  }
 
   Widget createChartElement(){
-    return LineChartSample2();
+    return LineChartSample2(_statisticsPresenter);
   }
 
   Widget createAVGElement(){
@@ -110,15 +203,11 @@ class StatisticsView extends StatelessWidget {
     return Scaffold(
         body: Container(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
-              child: createFactElement(),
-                flex: 2,
-              ),
-
-              Expanded(
-                child: createLevelElement(),
-                flex: 2,
+              child: createFactAndLevelElement(context),
+                flex: 3,
               ),
 
               Expanded(
@@ -128,7 +217,7 @@ class StatisticsView extends StatelessWidget {
 
               Expanded(
                 child: createAVGElement(),
-                flex: 4,
+                flex: 3,
               ),
             ],
           ),
@@ -138,15 +227,28 @@ class StatisticsView extends StatelessWidget {
 
 
 class LineChartSample2 extends StatefulWidget {
+  var _statisticsPresenter;
+
+  LineChartSample2(StatisticsPresenter statisticsPresenter){
+    _statisticsPresenter = statisticsPresenter;
+  }
+
   @override
-  _LineChartSample2State createState() => _LineChartSample2State();
+  _LineChartSample2State createState() => _LineChartSample2State(_statisticsPresenter);
 }
 
 class _LineChartSample2State extends State<LineChartSample2> {
-  List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
-  ];
+
+  var _statisticsPresenter;
+
+  List<Color> gradientColors = new List<Color>();
+
+  _LineChartSample2State(StatisticsPresenter statisticsPresenter){
+    _statisticsPresenter = statisticsPresenter;
+    gradientColors.add( _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorStart);
+    gradientColors.add( _statisticsPresenter.mainPresenter.mainPresenterModel.themeColorEnd);
+  }
+
 
   bool showAvg = false;
 
@@ -170,22 +272,24 @@ class _LineChartSample2State extends State<LineChartSample2> {
             ),
           ),
         ),
-        SizedBox(
-          width: 60,
-          height: 20,
-          child: FlatButton(
+        Row(
+
+          mainAxisAlignment: MainAxisAlignment.end,
+
+          children: <Widget>[
+            FlatButton(
             onPressed: () {
               setState(() {
                 showAvg = !showAvg;
               });
             },
             child: Text(
-              'avg',
+              'Средний балл',
               style: TextStyle(
                   fontSize: 15, color: showAvg ?  Colors.white: Colors.white.withOpacity(0.5), fontWeight: FontWeight.bold),
             ),
           ),
-        ),
+        ]),
       ],
     );
   }
@@ -263,14 +367,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
             }
             return '';
           },
-          reservedSize: 28,
-          margin: 10,
+          reservedSize: 22,
         ),
       ),
       borderData:
       FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 13,
+      maxX: 12,
       minY: 0,
       maxY: 62,
       lineBarsData: [
@@ -303,7 +406,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
 
   LineChartData avgData() {
     return LineChartData(
-      lineTouchData: LineTouchData(enabled: false),
+      lineTouchData: LineTouchData(enabled: true),
       gridData: FlGridData(
         show: false,
         drawHorizontalLine: false,
@@ -349,7 +452,6 @@ class _LineChartSample2State extends State<LineChartSample2> {
             }
             return '';
           },
-          margin: 8,
         ),
         leftTitles: SideTitles(
           showTitles: true,
@@ -375,8 +477,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             }
             return '';
           },
-          reservedSize: 28,
-          margin: 12,
+          reservedSize: 22,
         ),
       ),
       borderData:

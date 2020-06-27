@@ -41,8 +41,8 @@ class MainPresenter{
     _theoryPresenter = TheoryPresenter(this);
     _testPresenter = TestPresenter(this);
     _blitzPresenter = BlitzPresenter();
-    _statisticsPresenter = StatisticsPresenter();
     _signaturePresenter = SignaturePresenter(this);
+    _statisticsPresenter = StatisticsPresenter(this);
   }
 
 

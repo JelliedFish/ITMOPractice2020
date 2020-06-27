@@ -57,7 +57,7 @@ class _TestViewState extends State<TestView> {
                 Container(
                   child: IconButton(
                     color: _testPresenter
-                        .mainPresenter.mainPresenterModel.themeColor,
+                        .mainPresenter.mainPresenterModel.themeColorEnd,
                     icon: Icon(Icons.highlight_off),
                     iconSize: 30,
                     onPressed: () {
@@ -73,7 +73,7 @@ class _TestViewState extends State<TestView> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: _testPresenter
-                          .mainPresenter.mainPresenterModel.themeColor,
+                          .mainPresenter.mainPresenterModel.themeColorEnd,
                     ),
                   ),
                   child: Center(child: Text('$_hours : $_seconds')),
@@ -151,7 +151,7 @@ class _TestViewState extends State<TestView> {
             },
             icon: Icon(
               EgeHelper.pencil,
-              color: _testPresenter.mainPresenter.mainPresenterModel.themeColor,
+              color: _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
             ),
           ),
           flex: 2,
@@ -176,7 +176,7 @@ class _TestViewState extends State<TestView> {
             },
             icon: Icon(
               EgeHelper.question_circle_o,
-              color: _testPresenter.mainPresenter.mainPresenterModel.themeColor,
+              color: _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
             ),
           ),
           flex: 2,
