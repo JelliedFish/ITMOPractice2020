@@ -3,6 +3,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
+import 'package:flutterapp/DataBase/DataBase.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
 
 class TheoryView extends StatelessWidget {
@@ -28,13 +30,18 @@ class TheoryView extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return  Container(
             height: 48,
-            child: FlatButton(
+            child: FlatButton
+            (
               shape:  RoundedRectangleBorder( borderRadius: new BorderRadius.circular(20.0)),
               color: Colors.transparent,
-              child: Text("${index+1} Задание", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
-              onPressed: (){
+              child:
+              Text("${index+1} Задание", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
+              onPressed:  ()  {
+                VariantModel vm = new VariantModel(1, 1, 1, 1);
+                DBClient.db.insertVariant(vm);
+                var info =  DBClient.db.getVariant(1);
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context)=> TaskInfo(index,_theoryPresenter))
+                MaterialPageRoute(builder: (context)=> TaskInfo( info,_theoryPresenter))
                 );
 
               },
@@ -68,16 +75,33 @@ class TheoryView extends StatelessWidget {
   }
 }
 
+class TaskInfo extends StatefulWidget{
+  var _info;
+  var  _theoryPresenter;
 
-class TaskInfo extends StatelessWidget {
+  TaskInfo(Future<dynamic> info, TheoryPresenter theoryPresenter){
+    _info = info;
+    _theoryPresenter = theoryPresenter;
+  }
+
+  @override
+  _TaskInfo createState() => _TaskInfo(_info, _theoryPresenter);
+}
+
+
+class _TaskInfo extends State<TaskInfo> {
   var _info;
   var  _theoryPresenter;
 
 
   //TODO There should be the Widget with theory except 'info'
-  TaskInfo(int info, TheoryPresenter theoryPresenter){
-    _info = info;
+  _TaskInfo(Future<dynamic> info, TheoryPresenter theoryPresenter){
+    _info = getInfo(info);
     _theoryPresenter = theoryPresenter;
+  }
+
+  Future<VariantModel> getInfo(Future<dynamic> info) async {
+    return await info;
   }
 
   @override
@@ -85,19 +109,36 @@ class TaskInfo extends StatelessWidget {
     return Scaffold(
 
       body: Center(
-        child:  Container(
-          decoration: BoxDecoration(
-              color: _theoryPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
-              borderRadius: BorderRadius.circular(12)
-          ),
-        child: FlatButton(
-          child: Text("This is: ${_info+1}"),
-          onPressed: (){
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    ));
+        child: FutureBuilder<VariantModel>(future: _info,
+            builder: (BuildContext context, AsyncSnapshot<VariantModel> snapshot) {
+          Widget w;
+          if (snapshot.hasData) {
+            w = Container(
+              decoration: BoxDecoration(
+                  color: _theoryPresenter.mainPresenter.mainPresenterModel
+                      .themeColorEnd,
+                  borderRadius: BorderRadius.circular(12)
+              ),
+              child: FlatButton(
+                child: Text("This is:"+ snapshot.data.number.toString()),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            );
+          }
+          else {
+            w =  SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            );
+          }
+
+          return Center(
+            child: w,
+          );
+        })));
   }
 
 }
