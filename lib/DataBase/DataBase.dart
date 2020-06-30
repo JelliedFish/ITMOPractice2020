@@ -1,7 +1,9 @@
 
 import 'dart:io';
 
+import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
 import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
+import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -11,20 +13,40 @@ class DBClient {
 
   static final DBClient db = DBClient._();
 
-  static Database _database;
+  static Database _databaseOfVariants;
+  static Database _databaseOfTasks;
+  static Database _databaseOfTheory;
 
-  Future<Database> get database async {
-    if (_database != null)
-      return _database;
+  Future<Database> get databaseOfVariants async {
+    if (_databaseOfVariants != null)
+      return _databaseOfVariants;
 
     // if _database is null we instantiate it
-    _database = await initDB();
-    return _database;
+    _databaseOfVariants = await initDBOfVariants();
+    return _databaseOfVariants;
   }
 
-  initDB() async {
+  Future<Database> get databaseOfTheory async {
+    if (_databaseOfTheory != null)
+      return _databaseOfTheory;
+
+    // if _database is null we instantiate it
+    _databaseOfTheory = await initDBOfTheory();
+    return _databaseOfTheory;
+  }
+
+  Future<Database> get databaseOfTasks async {
+    if (_databaseOfTasks != null)
+      return _databaseOfTasks;
+
+    // if _database is null we instantiate it
+    _databaseOfTasks = await initDBOfTasks();
+    return _databaseOfTasks;
+  }
+
+  initDBOfVariants() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "DB1.db");
+    String path = join(documentsDirectory.path, "DBOfVariants.db");
     return await openDatabase(path, version: 1,
         onOpen: (db) {},
         onCreate: (Database db, int version) async {
@@ -42,23 +64,107 @@ class DBClient {
               "text10 TEXT,"
               "text11 TEXT,"
               "text12 TEXT,"
-              "number INTEGER,"
+              "image_link1 TEXT,"
+              "image_link2 TEXT,"
+              "image_link3 TEXT,"
+              "image_link4 TEXT,"
+              "image_link5 TEXT,"
+              "image_link6 TEXT,"
+              "image_link7 TEXT,"
+              "image_link8 TEXT,"
+              "image_link9 TEXT,"
+              "image_link10 TEXT,"
+              "image_link11 TEXT,"
+              "image_link12 TEXT,"
               "visited INTEGER,"
               "right_answers INTEGER"
               ")");
         });
   }
 
+  initDBOfTasks() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "DBOfTasksNew.db");
+    return await openDatabase(path, version: 1,
+        onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+          await db.execute("CREATE TABLE Task ("
+              "id INTEGER PRIMARY KEY,"
+              "text TEXT,"
+              "image_link TEXT,"
+              "visited INTEGER,"
+              "right_answer INTEGER"
+              ")");
+        });
+  }
+
+  initDBOfTheory() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "DBOfTheory.db");
+    return await openDatabase(path, version: 1,
+        onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+          await db.execute("CREATE TABLE Theory ("
+              "id INTEGER PRIMARY KEY,"
+              "text TEXT"
+              ")");
+        });
+  }
+
     Future<void> insertVariant(VariantModel vm) async {
-        final db = await database;
+        final db = await databaseOfVariants;
         var res = await db.insert("Variant", vm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
         return res;
     }
 
+    Future<void> insertTask(TaskModel tm) async {
+        final db = await databaseOfTasks;
+        var res = await db.insert("Task", tm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+        return res;
+    }
+    Future<void> insertTheory(TheoryModel tm) async {
+      final db = await databaseOfTheory;
+      var res = await db.insert("Theory", tm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+        return res;
+    }
+
+  updateVariant(VariantModel vm) async {
+    final db = await databaseOfVariants;
+    var res = await db.update("Variant", vm.toJson(),
+        where: "id = ?", whereArgs: [vm.id]);
+    return res;
+  }
+
+  updateTask(TaskModel tm) async {
+    final db = await databaseOfTasks;
+    var res = await db.update("Task", tm.toJson(),
+        where: "id = ?", whereArgs: [tm.id]);
+    return res;
+  }
+
+  updateTheory(TheoryModel tm) async {
+    final db = await databaseOfTheory;
+    var res = await db.update("Theory", tm.toJson(),
+        where: "id = ?", whereArgs: [tm.id]);
+    return res;
+  }
+
 
    getVariantByID(int id) async {
-      final db = await database;
+      final db = await databaseOfVariants;
       var res = await  db.query("Variant", where: "id = ?", whereArgs: [id]);
       return res.isNotEmpty ? VariantModel.fromJson(res.first) : Null ;
+    }
+
+   getTaskByID(int id) async {
+      final db = await databaseOfTasks;
+      var res = await  db.query("Task", where: "id = ?", whereArgs: [id]);
+      return res.isNotEmpty ? TaskModel.fromJson(res.first) : Null ;
+    }
+
+   getTheoryByID(int id) async {
+      final db = await databaseOfTheory;
+      var res = await  db.query("Theory", where: "id = ?", whereArgs: [id]);
+      return res.isNotEmpty ? TheoryModel.fromJson(res.first) : Null ;
     }
   }

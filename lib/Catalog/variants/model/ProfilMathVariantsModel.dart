@@ -9,11 +9,10 @@ class VariantModel {
   List <String> text_of_tasks = new List<String>(12);
   List <String> image_links = new List<String>(12);
 
-  int number;
   int visited;
   int right_answers;
   VariantModel(
-      this.id, this.text_of_tasks, this.number,this.visited,this.right_answers);
+      this.id, this.text_of_tasks, this.image_links, this.visited,this.right_answers);
 
 
   VariantModel clientFromJson(String str) {
@@ -32,10 +31,15 @@ class VariantModel {
     for(var i = 1; i <= 12; i++){
       tasks.add(json["text$i"]);
     }
+
+    List<String> links = new List<String>();
+    for(var i = 1; i <= 12; i++){
+      links.add(json["image_link$i"]);
+    }
     return new VariantModel(
         json["id"],
         tasks,
-        json["number"],
+        links,
         json["visited"],
         json["right_answers"]
     );
@@ -59,20 +63,19 @@ class VariantModel {
   'text11': text_of_tasks[10],
   'text12': text_of_tasks[11],
 
-  /*'image_links': [image_links[0],
-  image_links[1],
-  image_links[2],
-  image_links[3],
-  image_links[4],
-  image_links[5],
-  image_links[6],
-  image_links[7],
-  image_links[8],
-  image_links[9],
-  image_links[10],
-  image_links[11],
-  ],*/
-  'number': number,
+  'image_link1': image_links[0],
+  'image_link2': image_links[1],
+  'image_link3': image_links[2],
+  'image_link4': image_links[3],
+  'image_link5': image_links[4],
+  'image_link6': image_links[5],
+  'image_link7': image_links[6],
+  'image_link8': image_links[7],
+  'image_link9': image_links[8],
+  'image_link10': image_links[9],
+  'image_link11': image_links[10],
+  'image_link12': image_links[11],
+
   'visited': visited,
   'right_answers': right_answers
   };

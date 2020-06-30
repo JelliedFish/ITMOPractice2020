@@ -3,8 +3,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
 import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
 import 'package:flutterapp/DataBase/DataBase.dart';
+import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
 
 class TheoryView extends StatelessWidget {
@@ -36,10 +38,14 @@ class TheoryView extends StatelessWidget {
               color: Colors.transparent,
               child:
               Text("${index+1} Задание", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
-              onPressed:  ()  {
-                VariantModel vm = new VariantModel(1,["Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey"], 1, 1, 1);
-                DBClient.db.insertVariant(vm);
-                var info =  DBClient.db.getVariantByID(1);
+              onPressed:  (){
+                TheoryModel tm = new TheoryModel(index+1, "It's a theory of ${index+1} task ! ");
+                DBClient.db.insertTheory(tm);
+                  //TaskModel tm = new TaskModel(1, "first_task", "it's image", 1, 1);
+                  //DBClient.db.insertTask(tm);
+              //VariantModel vm = new VariantModel(1,["Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey"],["Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey"], 1, 1);
+                //DBClient.db.updateVariant(vm);
+                var info =  DBClient.db.getTheoryByID(index+1);
                 Navigator.push(context,
                 MaterialPageRoute(builder: (context)=> TaskInfo( info,_theoryPresenter))
                 );
@@ -100,7 +106,7 @@ class _TaskInfo extends State<TaskInfo> {
     _theoryPresenter = theoryPresenter;
   }
 
-  Future<VariantModel> getInfo(Future<dynamic> info) async {
+  Future<TheoryModel> getInfo(Future<dynamic> info) async {
     return await info;
   }
 
@@ -109,8 +115,8 @@ class _TaskInfo extends State<TaskInfo> {
     return Scaffold(
 
       body: Center(
-        child: FutureBuilder<VariantModel>(future: _info,
-            builder: (BuildContext context, AsyncSnapshot<VariantModel> snapshot) {
+        child: FutureBuilder<TheoryModel>(future: _info,
+            builder: (BuildContext context, AsyncSnapshot<TheoryModel> snapshot) {
           Widget w;
           if (snapshot.hasData) {
             w = Container(
@@ -120,7 +126,7 @@ class _TaskInfo extends State<TaskInfo> {
                   borderRadius: BorderRadius.circular(12)
               ),
               child: FlatButton(
-                child: Text("This is:"+ snapshot.data.text_of_tasks[0]),
+                child: Text("This is:"+ snapshot.data.text),
                 onPressed: () {
                   Navigator.pop(context);
                 },
