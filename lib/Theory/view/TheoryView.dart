@@ -3,7 +3,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
+import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
 import 'package:flutterapp/DataBase/DataBase.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
 
@@ -37,9 +37,9 @@ class TheoryView extends StatelessWidget {
               child:
               Text("${index+1} Задание", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
               onPressed:  ()  {
-                VariantModel vm = new VariantModel(1, 1, 1, 1);
+                VariantModel vm = new VariantModel(1,["Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey"], 1, 1, 1);
                 DBClient.db.insertVariant(vm);
-                var info =  DBClient.db.getVariant(1);
+                var info =  DBClient.db.getVariantByID(1);
                 Navigator.push(context,
                 MaterialPageRoute(builder: (context)=> TaskInfo( info,_theoryPresenter))
                 );
@@ -120,7 +120,7 @@ class _TaskInfo extends State<TaskInfo> {
                   borderRadius: BorderRadius.circular(12)
               ),
               child: FlatButton(
-                child: Text("This is:"+ snapshot.data.number.toString()),
+                child: Text("This is:"+ snapshot.data.text_of_tasks[0]),
                 onPressed: () {
                   Navigator.pop(context);
                 },
