@@ -92,4 +92,5 @@ flutter:
         - asset: assets/fonts/EgeHelper.ttf
   assets:
     - assets/images/logo.png
+    - assets/images/ege_graph.png
 

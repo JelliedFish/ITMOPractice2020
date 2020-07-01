@@ -52,45 +52,44 @@ class _TestViewState extends State<TestView> {
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  child: IconButton(
-                    color: _testPresenter
-                        .mainPresenter.mainPresenterModel.themeColorEnd,
-                    icon: Icon(Icons.highlight_off),
-                    iconSize: 30,
-                    onPressed: () {
-                      this._testPresenter.goBack(context);
-                    },
-                  ),
-                  padding: EdgeInsets.only(left: 5),
-                ),
-                Container(
-                  width: 80,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: _testPresenter
-                          .mainPresenter.mainPresenterModel.themeColorEnd,
-                    ),
-                  ),
-                  child: Center(child: Text('$_hours : $_seconds')),
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  child: InkWell(
-                    onTap: () {},
-                  ),
-                  decoration: BoxDecoration(
-                    image: new DecorationImage(
-                        image: new AssetImage('assets/images/logo.png')),
-                  ),
-                )
-              ],
+            Container(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                color: _testPresenter
+                    .mainPresenter.mainPresenterModel.themeColorEnd,
+                icon: Icon(Icons.highlight_off),
+                iconSize: 30,
+                onPressed: () {
+                  this._testPresenter.goBack(context);
+                },
+              ),
+              padding: EdgeInsets.only(left: 5),
             ),
+            Container(
+              alignment: Alignment.center,
+              width: 80,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: _testPresenter
+                      .mainPresenter.mainPresenterModel.themeColorEnd,
+                ),
+              ),
+              child: Center(child: Text('$_hours : $_seconds')),
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              width: 40,
+              height: 40,
+              child: InkWell(
+                onTap: () {},
+              ),
+              decoration: BoxDecoration(
+                image: new DecorationImage(
+                    image: new AssetImage('assets/images/logo.png')),
+              ),
+            )
           ]),
     );
   }
@@ -131,9 +130,8 @@ class _TestViewState extends State<TestView> {
             margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
           ),
           Container(
-              child: const Image(
-                  image:
-                      NetworkImage('https://ege.sdamgia.ru/get_file?id=37577')),
+              child:
+                  const Image(image: AssetImage('assets/images/ege_graph.png')),
               margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0))
         ],
       ),
@@ -151,7 +149,8 @@ class _TestViewState extends State<TestView> {
             },
             icon: Icon(
               EgeHelper.pencil,
-              color: _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+              color:
+                  _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
             ),
           ),
           flex: 2,
@@ -176,7 +175,8 @@ class _TestViewState extends State<TestView> {
             },
             icon: Icon(
               EgeHelper.question_circle_o,
-              color: _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+              color:
+                  _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
             ),
           ),
           flex: 2,
