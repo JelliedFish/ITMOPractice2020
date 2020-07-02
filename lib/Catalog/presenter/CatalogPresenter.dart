@@ -41,16 +41,16 @@ class CatalogPresenter {
     switch (_state) {
       case "Student":
         {
-          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.blue;
-          _mainPresenter.mainPresenterModel.themeColorStart = Colors.blue;
+          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.indigo;
+          _mainPresenter.mainPresenterModel.themeColorStart = Colors.indigo;
           _mainPresenter.mainPresenterModel.amountOfTasks = 26;
         }
         break;
 
       case "Teacher":
         {
-          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.red;
-          _mainPresenter.mainPresenterModel.themeColorStart = Colors.red;
+          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.redAccent;
+          _mainPresenter.mainPresenterModel.themeColorStart = Colors.redAccent;
           _mainPresenter.mainPresenterModel.amountOfTasks = 12;
         }
         break;
