@@ -115,7 +115,7 @@ class CatalogViewState extends State<CatalogView> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      'Варианты',
+                      'Текущие',
                       style: TextStyle(fontSize: 20),
                     ),
                   ))),
@@ -125,7 +125,7 @@ class CatalogViewState extends State<CatalogView> {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  'По заданиям',
+                  'Добавить',
                   style: TextStyle(fontSize: 20),
                 ),
               ),

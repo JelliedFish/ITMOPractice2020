@@ -17,16 +17,14 @@ class MainPresenterView extends StatefulWidget{
 class _MainPresenterView extends State<MainPresenterView> {
   int _cIndex = 0;
   var _mainPresenter;
-  var tabs = new List<Widget>(4);
+  var tabs = new List<Widget>(2);
 
 
   _MainPresenterView(mainPresenter) {
 
     _mainPresenter = mainPresenter;
     tabs[0] = this._mainPresenter.catalogPresenter.catalogView;
-    tabs[1] = this._mainPresenter.theoryPresenter.theoryView;
-    tabs[2] = this._mainPresenter.statisticsPresenter.statisticsView;
-    tabs[3] = this._mainPresenter.blitzPresenter.blitzView;
+    tabs[1] = this._mainPresenter.statisticsPresenter.statisticsView;
   }
 
 
@@ -50,20 +48,12 @@ class _MainPresenterView extends State<MainPresenterView> {
           items: [
             BottomNavigationBarItem(
                 icon: Icon(Icons.collections_bookmark),
-                title: new Text('Каталог')
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.book),
-                title: new Text('Теория')
+                title: new Text('Расписание')
             ),
             BottomNavigationBarItem(
                 icon: Icon(Icons.timeline),
                 title: new Text('Статистика')
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.timer),
-                title: new Text('Блиц')
-            )
           ],
           onTap: (index){
             _incrementTab(index);

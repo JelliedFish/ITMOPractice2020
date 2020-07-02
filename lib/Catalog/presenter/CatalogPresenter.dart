@@ -39,18 +39,18 @@ class CatalogPresenter {
 
   void loadCatalogModel() {
     switch (_state) {
-      case "Russian":
+      case "Student":
         {
-          _mainPresenter.mainPresenterModel.themeColorEnd = Color(0xff8323A7);
-          _mainPresenter.mainPresenterModel.themeColorStart = Color(0xffC9A8E8);
+          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.blue;
+          _mainPresenter.mainPresenterModel.themeColorStart = Colors.blue;
           _mainPresenter.mainPresenterModel.amountOfTasks = 26;
         }
         break;
 
-      case "Math":
+      case "Teacher":
         {
-          _mainPresenter.mainPresenterModel.themeColorEnd = Color(0xffF05D59);
-          _mainPresenter.mainPresenterModel.themeColorStart = Color(0xffFFA798);
+          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.red;
+          _mainPresenter.mainPresenterModel.themeColorStart = Colors.red;
           _mainPresenter.mainPresenterModel.amountOfTasks = 12;
         }
         break;

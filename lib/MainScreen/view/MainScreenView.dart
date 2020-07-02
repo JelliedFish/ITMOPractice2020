@@ -43,7 +43,7 @@ class HomePage extends MainScreenView {
                 gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                colors: [Colors.redAccent,Colors.deepPurple])),
+                colors: [Colors.red,Colors.blue])),
             child: Center(
               child : Container(
               child: new Column(
@@ -55,7 +55,7 @@ class HomePage extends MainScreenView {
                   _mainScreenPresenter.goToCatalogRussian(context);
                 },
                 child: Text(
-                  "Русский",
+                  "Студент",
                   style: TextStyle(fontSize: 27.0),
                 ),
               )
@@ -66,7 +66,7 @@ class HomePage extends MainScreenView {
                         _mainScreenPresenter.goToCatalogMath(context);
                     },
                     child: Text(
-                      "Математика",
+                      "Преподаватель",
                       style: TextStyle(fontSize: 27.0),
                     ),
                   )],
