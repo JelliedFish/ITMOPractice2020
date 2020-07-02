@@ -12,7 +12,8 @@ class Item extends StatefulWidget {
   Item(this._value, this._text, this._color, this._catalogPresenter);
 
   @override
-  State<StatefulWidget> createState() => ItemState(_value, _text, _color, _catalogPresenter);
+  State<StatefulWidget> createState() =>
+      ItemState(_value, _text, _color, _catalogPresenter);
 }
 
 class ItemState extends State<Item> with SingleTickerProviderStateMixin {
@@ -48,32 +49,26 @@ class ItemState extends State<Item> with SingleTickerProviderStateMixin {
     final percentage = (value * 100).toInt();
     return Center(
         child: GestureDetector(
-            onTap: (){
+            onTap: () {
               _catalogPresenter.goToTest(context);
             },
-            child: Card(
-              elevation: 20,
-              shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: LiquidCustomProgressIndicator(
-                value: value,
-                direction: Axis.vertical,
-                backgroundColor: Color.fromRGBO(213, 212, 211, 0.33),
-              valueColor: AlwaysStoppedAnimation(color),
-              shapePath: _buildHeartPath(),
-                center: Text(
-                  "$text",
-                  style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            )
-        )
-    );
+            child: Container(
+                height: 100,
+                width: 100,
+                child: Card(
+                    color:  _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+                    elevation: 20,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Center(child: Text(
+                      "$text",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ))))));
   }
 
   Path _buildHeartPath() {
@@ -82,5 +77,4 @@ class ItemState extends State<Item> with SingleTickerProviderStateMixin {
         Rect.fromLTWH(0, 0, 100, 100), Radius.circular(10)));
     return path;
   }
-
 }
