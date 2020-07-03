@@ -94,7 +94,7 @@ class TaskInfo extends StatefulWidget{
   @override
   _TaskInfo createState() => _TaskInfo(_info, _theoryPresenter);
 }
-
+//
 
 class _TaskInfo extends State<TaskInfo> {
   var _info;
