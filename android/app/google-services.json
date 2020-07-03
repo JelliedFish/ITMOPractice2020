@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "623779241005",
+    "firebase_url": "https://itmopractice2020.firebaseio.com",
+    "project_id": "itmopractice2020",
+    "storage_bucket": "itmopractice2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623779241005:android:d4ebc87b3249cdaf38eca4",
+        "android_client_info": {
+          "package_name": "com.brainstorm.itmo_practice_2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623779241005-6pl7e532bjm21ebg3l4kocoagtgn1kun.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbWFZ-oU1SVfZFUqZInL7cPng3wazTkMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623779241005-6pl7e532bjm21ebg3l4kocoagtgn1kun.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
