@@ -11,7 +11,7 @@ class TestPresenter{
   get mainPresenter => _mainPresenter;
 
   TestPresenter(MainPresenter mainPresenter){
-    _testView = TestView(this, 45, 0);
+    _testView = TestView(this);
     _mainPresenter = mainPresenter;
   }
 

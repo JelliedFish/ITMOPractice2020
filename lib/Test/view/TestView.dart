@@ -1,49 +1,38 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
+import 'package:flutterapp/Catalog/view/VariantItem.dart';
 import 'package:flutterapp/Test/presenter/TestPresenter.dart';
-import 'package:flutterapp/assets/ege_helper_icons.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:flutterapp/liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class TestView extends StatefulWidget {
   var _testPresenter;
-  int _hours;
-  int _seconds;
 
-  TestView(this._testPresenter, this._hours, this._seconds);
+  TestView(TestPresenter testPresenter) {
+    this._testPresenter = testPresenter;
+  }
 
   @override
-  State<StatefulWidget> createState() =>
-      _TestViewState(_testPresenter, _hours, _seconds);
+  State<StatefulWidget> createState() => TestViewState(_testPresenter);
 }
 
-class _TestViewState extends State<TestView> {
+class TestViewState extends State<TestView> {
   var _testPresenter;
-  PanelController _pc = new PanelController();
-  int _hours;
-  int _seconds;
-  Timer _timer;
+  List<bool> _isSelected;
+  int _fIndex = 0;
+  var fragments = new List<Widget>(2);
 
-  _TestViewState(this._testPresenter, this._hours, this._seconds);
+  TestViewState(TestPresenter testPresenter){
 
-  void _startTimer() {
-    if (_timer != null) {
-      _timer.cancel();
-    }
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_seconds > 0) {
-          _seconds--;
-        } else if (_hours > 0) {
-          _hours--;
-          _seconds = 59;
-        } else {
-          _timer.cancel();
-        }
-      });
-    });
+    _testPresenter = testPresenter;
+    fragments[0] = this._testPresenter.variantsPresenter.variantsView;
+    fragments[1] = this._testPresenter.tasksPresenter.tasksView;
+  }
+
+  @override
+  void initState() {
+    _isSelected = [true, false];
+    super.initState();
   }
 
   Container createFirstElement(BuildContext context) {
@@ -52,186 +41,90 @@ class _TestViewState extends State<TestView> {
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                color: _testPresenter
-                    .mainPresenter.mainPresenterModel.themeColorEnd,
-                icon: Icon(Icons.highlight_off),
-                iconSize: 30,
-                onPressed: () {
-                  this._testPresenter.goBack(context);
-                },
-              ),
-              padding: EdgeInsets.only(left: 5),
+            Row(
+              children: <Widget>[
+                Container(
+                  child: IconButton(
+                    color: _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+                    icon: Icon(Icons.highlight_off),
+                    iconSize: 30,
+                    onPressed: () {
+                      this._testPresenter.goBack(context);
+                    },
+                  ),
+                  padding: EdgeInsets.only(left: 15),
+                )
+              ],
             ),
-            Container(
-              alignment: Alignment.center,
-              width: 80,
-              height: 30,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: _testPresenter
-                      .mainPresenter.mainPresenterModel.themeColorEnd,
+              ],
+            ),
+    );
+  }
+
+  Widget createSecondElement() {
+    return Container(
+        padding: EdgeInsets.only(top: 30),
+        child:
+        Container(
+
+          child: ToggleButtons(
+            borderRadius: BorderRadius.all(Radius.circular(80)),
+            borderColor: Colors.white70,
+            fillColor: _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+            selectedColor: Colors.white,
+            children: <Widget>[
+              Container(
+
+                  width: 150,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Четная',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ))),
+              Container(
+                width: 150,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      'Нечетная',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
                 ),
               ),
-              child: Center(child: Text('$_hours : $_seconds')),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              width: 40,
-              height: 40,
-              child: InkWell(
-                onTap: () {},
-              ),
-              decoration: BoxDecoration(
-                image: new DecorationImage(
-                    image: new AssetImage('assets/images/logo.png')),
-              ),
-            )
-          ]),
-    );
-  }
-
-  Swiper createSwipeLayout() {
-    return new Swiper(
-      itemBuilder: (BuildContext context, int index) {
-        return new Container(
-          child: Column(
-            children: <Widget>[
-              new Expanded(
-                child: createTaskCard(),
-                flex: 7,
-              ),
-              new Expanded(
-                child: createAnswerCard(),
-                flex: 2,
-              ),
             ],
-          ),
-        );
-      },
-      itemCount: 12,
-      pagination: new SwiperPagination(),
-      control: new SwiperControl(),
-    );
-  }
-
-  Card createTaskCard() {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: Text(
-              'На диаграмме показан средний балл участников 10 стран в тестировании учащихся 4-го класса, по естествознанию в 2007 году (по 1000-балльной шкале). По данным диаграммы найдите число стран, в которых средний балл участников выше, чем в Венгрии.',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-          ),
-          Container(
-              child:
-                  const Image(image: AssetImage('assets/images/ege_graph.png')),
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0))
-        ],
-      ),
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20),
-    );
-  }
-
-  Widget createAnswerCard() {
-    return Card(
-      child: new Row(children: <Widget>[
-        new Expanded(
-          child: IconButton(
-            onPressed: () {
-              _testPresenter.goToSignature(context);
+            onPressed: (int index) {
+              setState(() {
+                _fIndex = index;
+                for (int buttonIndex = 0;
+                buttonIndex < _isSelected.length;
+                buttonIndex++) {
+                  if (buttonIndex == index) {
+                    _isSelected[buttonIndex] = true;
+                  } else {
+                    _isSelected[buttonIndex] = false;
+                  }
+                }
+              });
             },
-            icon: Icon(
-              EgeHelper.pencil,
-              color:
-                  _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
-            ),
+            isSelected: _isSelected,
           ),
-          flex: 2,
-        ),
-        new Expanded(
-          child: Container(
-            child: Center(
-                child: TextFormField(
-              decoration: InputDecoration(
-                  labelText: 'Ответ',
-                  hintText: 'Введите ответ',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-            )),
-          ),
-          flex: 8,
-        ),
-        new Expanded(
-          child: IconButton(
-            onPressed: () {
-              _pc.open();
-            },
-            icon: Icon(
-              EgeHelper.question_circle_o,
-              color:
-                  _testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
-            ),
-          ),
-          flex: 2,
-        )
-      ]),
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10),
-    );
+        ));
   }
 
-  Widget _floatingPanel() {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20.0,
-              color: Colors.grey,
-            ),
-          ]),
-      child: Center(
-        child: Text("This is the SlidingUpPanel when open"),
-      ),
-    );
-  }
-
-  Widget createTest(BuildContext context) {
-    return SlidingUpPanel(
-      controller: _pc,
-      body: Column(children: <Widget>[
-        new Expanded(
-          child: createFirstElement(context),
-          flex: 1,
-        ),
-        new Expanded(
-          child: Container(
-            child: Center(
-              child: createSwipeLayout(),
-            ),
-          ),
-          flex: 9,
-        ),
-      ]),
-      panel: _floatingPanel(),
-      minHeight: 0,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    _startTimer();
-    Widget test = createTest(context);
     return Scaffold(
-      body: test,
+      body: Column(children: <Widget>[
+        new Expanded(child: createFirstElement(context), flex: 3),
+        new Expanded(child: createSecondElement(), flex: 4),
+        new Expanded(child: fragments[_fIndex], flex: 22)
+      ]),
     );
   }
 }

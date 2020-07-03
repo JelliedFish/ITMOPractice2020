@@ -14,19 +14,17 @@ class TasksView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildGridView(context),
-    );
-  }
 
-  Widget buildGridView(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 5),
-      child: GridView.count(
-        crossAxisCount: 3,
-        children: <Widget>[
-
-        ],
-      ),
+      body: Center(
+        child :  Container(
+          padding: EdgeInsets.only(top: 5),
+            child : TextFormField(
+            decoration: InputDecoration(
+                labelText: 'Enter your username'
+            ),
+          ),
+        ),
+      )
     );
   }
 }

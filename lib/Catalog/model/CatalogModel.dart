@@ -6,7 +6,7 @@ class CatalogModel{
 
 
   var _catalogPresenter;
-  var _amountOfAnswers = "50 из 600";
+  var _amountOfAnswers = "ФИО преподавателя";
 
   get amountOfAnswers => _amountOfAnswers;
 

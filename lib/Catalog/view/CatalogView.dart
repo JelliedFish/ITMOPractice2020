@@ -87,8 +87,6 @@ class CatalogViewState extends State<CatalogView> {
                         topRight: Radius.circular(0.0),
                         bottomRight: Radius.circular(0.0)),
                   ),
-                  width: 100,
-                  height: 40,
                 )
               ],
             ),
