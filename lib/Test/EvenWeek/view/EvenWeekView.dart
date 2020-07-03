@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
 import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
 import 'package:flutterapp/DataBase/DataBase.dart';
+import 'package:flutterapp/Test/EvenWeek/Timetable/presenter/TimtablePresenter.dart';
 import 'package:flutterapp/Test/EvenWeek/presenter/EvenWeekPresenter.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
@@ -43,12 +44,10 @@ class EvenWeekView extends StatelessWidget {
                     child:
                     Text(whatTheDay(index), style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                     onPressed:  (){
-                      TheoryModel tm = new TheoryModel(index+1, "It's a theory of ${index+1} task ! ");
-                      DBClient.db.insertTheory(tm);
-                      var info =  DBClient.db.getTheoryByID(index+1);
+                      String info = "It's an info";
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=> TaskInfo( info,_evenWeekPresenter))
-                      );
+                          MaterialPageRoute(builder: (context)=> EvenTimetablePresenter(_evenWeekPresenter,info).timetableView
+                      ));
 
                     },
 
@@ -81,73 +80,6 @@ class EvenWeekView extends StatelessWidget {
   }
 }
 
-class TaskInfo extends StatefulWidget{
-  var _info;
-  var  _theoryPresenter;
-
-  TaskInfo(Future<dynamic> info, TheoryPresenter theoryPresenter){
-    _info = info;
-    _theoryPresenter = theoryPresenter;
-  }
-
-  @override
-  _TaskInfo createState() => _TaskInfo(_info, _theoryPresenter);
-}
-
-
-class _TaskInfo extends State<TaskInfo> {
-  var _info;
-  var  _theoryPresenter;
-
-
-  //TODO There should be the Widget with theory except 'info'
-  _TaskInfo(Future<dynamic> info, TheoryPresenter theoryPresenter){
-    _info = getInfo(info);
-    _theoryPresenter = theoryPresenter;
-  }
-
-  Future<TheoryModel> getInfo(Future<dynamic> info) async {
-    return await info;
-  }
-
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-
-        body: Center(
-            child: FutureBuilder<TheoryModel>(future: _info,
-                builder: (BuildContext context, AsyncSnapshot<TheoryModel> snapshot) {
-                  Widget w;
-                  if (snapshot.hasData) {
-                    w = Container(
-                      decoration: BoxDecoration(
-                          color: _theoryPresenter.mainPresenter.mainPresenterModel
-                              .themeColorEnd,
-                          borderRadius: BorderRadius.circular(12)
-                      ),
-                      child: FlatButton(
-                        child: Text("This is:"+ snapshot.data.text),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    );
-                  }
-                  else {
-                    w =  SizedBox(
-                      child: CircularProgressIndicator(),
-                      width: 60,
-                      height: 60,
-                    );
-                  }
-
-                  return Center(
-                    child: w,
-                  );
-                })));
-  }
-
-}
 
 String whatTheDay(int index){
   switch(index){

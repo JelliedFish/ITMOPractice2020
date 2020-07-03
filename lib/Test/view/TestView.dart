@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Catalog/presenter/CatalogPresenter.dart';
-import 'package:flutterapp/Catalog/view/VariantItem.dart';
 import 'package:flutterapp/Test/presenter/TestPresenter.dart';
-import 'package:flutterapp/liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class TestView extends StatefulWidget {
   var _testPresenter;

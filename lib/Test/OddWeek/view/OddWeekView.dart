@@ -7,6 +7,7 @@ import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
 import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
 import 'package:flutterapp/DataBase/DataBase.dart';
 import 'package:flutterapp/Test/EvenWeek/presenter/EvenWeekPresenter.dart';
+import 'package:flutterapp/Test/OddWeek/Timetable/presenter/TimetablePresenter.dart';
 import 'package:flutterapp/Test/OddWeek/presenter/OddWeekPresenter.dart';
 import 'package:flutterapp/Test/presenter/TestPresenter.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
@@ -48,8 +49,8 @@ class OddWeekView extends StatelessWidget {
                       TheoryModel tm = new TheoryModel(index+1, "It's a theory of ${index+1} task ! ");
                       var info =  "It's an info";
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=> TaskInfo( info,_oddWeekPresenter))
-                      );
+                          MaterialPageRoute(builder: (context)=> OddTimetablePresenter(_oddWeekPresenter,info).timetableView
+                      ));
 
                     },
 
@@ -82,58 +83,6 @@ class OddWeekView extends StatelessWidget {
   }
 }
 
-class TaskInfo extends StatefulWidget{
-  var _info;
-  var  _oddWeekPresenter;
-
-  TaskInfo(String info, OddWeekPresenter oddWeekPresenter){
-    _info = info;
-    _oddWeekPresenter = oddWeekPresenter;
-  }
-
-  @override
-  _TaskInfo createState() => _TaskInfo(_info, _oddWeekPresenter);
-}
-//
-
-class _TaskInfo extends State<TaskInfo> {
-  var _info;
-  var  _oddWeekPresenter;
-
-
-  _TaskInfo(this._info, this._oddWeekPresenter);
-
-  List<String> litems = [];
-  final TextEditingController eCtrl = new TextEditingController();
-  @override
-  Widget build (BuildContext ctxt) {
-    return new Scaffold(
-        appBar: new AppBar(),
-        body: new Column(
-          children: <Widget>[
-            new TextField(
-              controller: eCtrl,
-              onSubmitted: (text) {
-                litems.add(text);
-                eCtrl.clear();
-                setState(() {});
-              },
-            ),
-            new Expanded(
-                child: new ListView.builder
-                  (
-                    itemCount: litems.length,
-                    itemBuilder: (BuildContext ctxt, int Index) {
-                      return new Text(litems[Index]);
-                    }
-                )
-            )
-          ],
-        )
-    );
-  }
-
-}
 
 String whatTheDay(int index){
   switch(index){
