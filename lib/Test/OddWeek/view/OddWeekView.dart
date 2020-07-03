@@ -8,6 +8,7 @@ import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
 import 'package:flutterapp/DataBase/DataBase.dart';
 import 'package:flutterapp/Test/EvenWeek/presenter/EvenWeekPresenter.dart';
 import 'package:flutterapp/Test/OddWeek/presenter/OddWeekPresenter.dart';
+import 'package:flutterapp/Test/presenter/TestPresenter.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
 
@@ -45,8 +46,7 @@ class OddWeekView extends StatelessWidget {
                     Text(whatTheDay(index), style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                     onPressed:  (){
                       TheoryModel tm = new TheoryModel(index+1, "It's a theory of ${index+1} task ! ");
-                      DBClient.db.insertTheory(tm);
-                      var info =  DBClient.db.getTheoryByID(index+1);
+                      var info =  "It's an info";
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context)=> TaskInfo( info,_oddWeekPresenter))
                       );
@@ -84,68 +84,53 @@ class OddWeekView extends StatelessWidget {
 
 class TaskInfo extends StatefulWidget{
   var _info;
-  var  _theoryPresenter;
+  var  _oddWeekPresenter;
 
-  TaskInfo(Future<dynamic> info, TheoryPresenter theoryPresenter){
+  TaskInfo(String info, OddWeekPresenter oddWeekPresenter){
     _info = info;
-    _theoryPresenter = theoryPresenter;
+    _oddWeekPresenter = oddWeekPresenter;
   }
 
   @override
-  _TaskInfo createState() => _TaskInfo(_info, _theoryPresenter);
+  _TaskInfo createState() => _TaskInfo(_info, _oddWeekPresenter);
 }
 //
 
 class _TaskInfo extends State<TaskInfo> {
   var _info;
-  var  _theoryPresenter;
+  var  _oddWeekPresenter;
 
 
-  //TODO There should be the Widget with theory except 'info'
-  _TaskInfo(Future<dynamic> info, TheoryPresenter theoryPresenter){
-    _info = getInfo(info);
-    _theoryPresenter = theoryPresenter;
-  }
+  _TaskInfo(this._info, this._oddWeekPresenter);
 
-  Future<TheoryModel> getInfo(Future<dynamic> info) async {
-    return await info;
-  }
-
+  List<String> litems = [];
+  final TextEditingController eCtrl = new TextEditingController();
   @override
-  Widget build(BuildContext context){
-    return Scaffold(
-
-        body: Center(
-            child: FutureBuilder<TheoryModel>(future: _info,
-                builder: (BuildContext context, AsyncSnapshot<TheoryModel> snapshot) {
-                  Widget w;
-                  if (snapshot.hasData) {
-                    w = Container(
-                      decoration: BoxDecoration(
-                          color: _theoryPresenter.mainPresenter.mainPresenterModel
-                              .themeColorEnd,
-                          borderRadius: BorderRadius.circular(12)
-                      ),
-                      child: FlatButton(
-                        child: Text("This is:"+ snapshot.data.text),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    );
-                  }
-                  else {
-                    w =  SizedBox(
-                      child: CircularProgressIndicator(),
-                      width: 60,
-                      height: 60,
-                    );
-                  }
-
-                  return Center(
-                    child: w,
-                  );
-                })));
+  Widget build (BuildContext ctxt) {
+    return new Scaffold(
+        appBar: new AppBar(),
+        body: new Column(
+          children: <Widget>[
+            new TextField(
+              controller: eCtrl,
+              onSubmitted: (text) {
+                litems.add(text);
+                eCtrl.clear();
+                setState(() {});
+              },
+            ),
+            new Expanded(
+                child: new ListView.builder
+                  (
+                    itemCount: litems.length,
+                    itemBuilder: (BuildContext ctxt, int Index) {
+                      return new Text(litems[Index]);
+                    }
+                )
+            )
+          ],
+        )
+    );
   }
 
 }
