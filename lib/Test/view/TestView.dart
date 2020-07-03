@@ -25,8 +25,8 @@ class TestViewState extends State<TestView> {
   TestViewState(TestPresenter testPresenter){
 
     _testPresenter = testPresenter;
-    fragments[0] = this._testPresenter.variantsPresenter.variantsView;
-    fragments[1] = this._testPresenter.tasksPresenter.tasksView;
+    fragments[0] = this._testPresenter.evenWeekPresenter.evenWeekView;
+    fragments[1] = this._testPresenter.oddWeekPresenter.oddWeekView;
   }
 
   @override
