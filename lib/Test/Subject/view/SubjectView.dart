@@ -163,7 +163,7 @@ class SubjectViewState extends State<SubjectView> {
              children: <Widget>[
                TextField(
                  controller: _teacherName,
-                 decoration: InputDecoration(
+                 decoration: InputDecoration(//
                    border: OutlineInputBorder(),
                    labelText: 'ФИО преподавателя',
                  ),
