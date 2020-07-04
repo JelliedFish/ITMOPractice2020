@@ -3,15 +3,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
-import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
-import 'package:flutterapp/DataBase/DataBase.dart';
-import 'package:flutterapp/Test/EvenWeek/presenter/EvenWeekPresenter.dart';
 import 'package:flutterapp/Test/OddWeek/Timetable/presenter/TimetablePresenter.dart';
 import 'package:flutterapp/Test/OddWeek/presenter/OddWeekPresenter.dart';
-import 'package:flutterapp/Test/presenter/TestPresenter.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
-import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
 
 class OddWeekView extends StatelessWidget {
 

@@ -16,15 +16,22 @@ class TasksView extends StatelessWidget{
     return Scaffold(
 
       body: Center(
+        child: Container(
+          padding: EdgeInsets.only() ,
         child :  Container(
-          padding: EdgeInsets.only(top: 5),
+          padding: EdgeInsets.only(top: 50),
             child : TextFormField(
+
+              autofocus: false,
             decoration: InputDecoration(
-                labelText: 'Enter your username'
+                icon: Icon(Icons.group),
+                labelText: 'Введите номер группы'
             ),
           ),
+          width: 150,
+          height: 70,
         ),
-      )
+      ))
     );
   }
 }

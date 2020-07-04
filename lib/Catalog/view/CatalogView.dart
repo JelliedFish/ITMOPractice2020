@@ -36,7 +36,7 @@ class CatalogViewState extends State<CatalogView> {
 
   Container createFirstElement(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 30),
+        padding: EdgeInsets.only(),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -96,7 +96,7 @@ class CatalogViewState extends State<CatalogView> {
 
   Widget createSecondElement() {
     return Container(
-      padding: EdgeInsets.only(top: 30),
+      padding: EdgeInsets.only(),
       child:
       Container(
 
@@ -149,43 +149,6 @@ class CatalogViewState extends State<CatalogView> {
     ));
   }
 
-  Widget buildGridView(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 5),
-      child: GridView.count(
-        crossAxisCount: 3,
-        children: <Widget>[
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.75, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-          new VariantItem(0.34, _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd),
-        ],
-      ),
-    );
-  }
 
   //
 
@@ -193,9 +156,11 @@ class CatalogViewState extends State<CatalogView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: <Widget>[
-        new Expanded(child: createFirstElement(context), flex: 3),
-        new Expanded(child: createSecondElement(), flex: 4),
-        new Expanded(child: fragments[_fIndex], flex: 22)
+        new Expanded(child: Container(height: 30), flex: 1),
+        new Expanded(child: createFirstElement(context), flex: 2),
+        new Expanded(child: Container(height: 15), flex: 1),
+        new Expanded(child: createSecondElement(), flex: 3),
+        new Expanded(child: fragments[_fIndex], flex: 24)
       ]),
     );
   }
