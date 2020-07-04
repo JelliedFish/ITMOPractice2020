@@ -4,27 +4,25 @@ import 'package:flutterapp/liquid_progress_indicator/src/liquid_custom_progress_
 import 'package:flutter/material.dart';
 
 class Item extends StatefulWidget {
-  final double _value;
   final String _text;
   final Color _color;
   final CatalogPresenter _catalogPresenter;
 
-  Item(this._value, this._text, this._color, this._catalogPresenter);
+  Item(this._text, this._color, this._catalogPresenter);
 
   @override
   State<StatefulWidget> createState() =>
-      ItemState(_value, _text, _color, _catalogPresenter);
+      ItemState(_text, _color, _catalogPresenter);
 }
 
 class ItemState extends State<Item> with SingleTickerProviderStateMixin {
   AnimationController _animationController;
 
-  final double value;
   final String text;
   final Color color;
   final CatalogPresenter _catalogPresenter;
 
-  ItemState(this.value, this.text, this.color, this._catalogPresenter);
+  ItemState(this.text, this.color, this._catalogPresenter);
 
   @override
   void initState() {
@@ -46,7 +44,6 @@ class ItemState extends State<Item> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final percentage = (value * 100).toInt();
     return Center(
         child: GestureDetector(
             onTap: () {

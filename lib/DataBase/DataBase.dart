@@ -1,8 +1,8 @@
 
 import 'dart:io';
 
-import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
-import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
+import 'package:flutterapp/Catalog/tasks/model/TaskModel.dart';
+import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -111,36 +111,14 @@ class DBClient {
         });
   }
 
-    Future<void> insertVariant(VariantModel vm) async {
-        final db = await databaseOfVariants;
-        var res = await db.insert("Variant", vm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
-        return res;
-    }
 
-    Future<void> insertTask(TaskModel tm) async {
-        final db = await databaseOfTasks;
-        var res = await db.insert("Task", tm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
-        return res;
-    }
+
     Future<void> insertTheory(TheoryModel tm) async {
       final db = await databaseOfTheory;
       var res = await db.insert("Theory", tm.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
         return res;
     }
 
-  updateVariant(VariantModel vm) async {
-    final db = await databaseOfVariants;
-    var res = await db.update("Variant", vm.toJson(),
-        where: "id = ?", whereArgs: [vm.id]);
-    return res;
-  }
-
-  updateTask(TaskModel tm) async {
-    final db = await databaseOfTasks;
-    var res = await db.update("Task", tm.toJson(),
-        where: "id = ?", whereArgs: [tm.id]);
-    return res;
-  }
 
   updateTheory(TheoryModel tm) async {
     final db = await databaseOfTheory;
@@ -149,18 +127,6 @@ class DBClient {
     return res;
   }
 
-
-   getVariantByID(int id) async {
-      final db = await databaseOfVariants;
-      var res = await  db.query("Variant", where: "id = ?", whereArgs: [id]);
-      return res.isNotEmpty ? VariantModel.fromJson(res.first) : Null ;
-    }
-
-   getTaskByID(int id) async {
-      final db = await databaseOfTasks;
-      var res = await  db.query("Task", where: "id = ?", whereArgs: [id]);
-      return res.isNotEmpty ? TaskModel.fromJson(res.first) : Null ;
-    }
 
    getTheoryByID(int id) async {
       final db = await databaseOfTheory;

@@ -18,7 +18,7 @@ class MainScreenPresenter {
     runApp(_mainScreenView);
   }
 
-  void goToCatalogMath(BuildContext context){
+  void goToCatalogTeacher(BuildContext context){
     _mainPresenter.catalogPresenter.state = "Teacher";
     _mainPresenter.catalogPresenter.loadCatalogModel();
     Navigator.push(context,
@@ -26,7 +26,7 @@ class MainScreenPresenter {
     );
   }
 
-  void goToCatalogRussian(BuildContext context){
+  void goToCatalogStudent(BuildContext context){
     _mainPresenter.catalogPresenter.state = "Student";
     _mainPresenter.catalogPresenter.loadCatalogModel();
 

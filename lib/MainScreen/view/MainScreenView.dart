@@ -52,7 +52,7 @@ class HomePage extends MainScreenView {
                 textColor: Colors.white,
 
                 onPressed: () {
-                  _mainScreenPresenter.goToCatalogRussian(context);
+                  _mainScreenPresenter.goToCatalogStudent(context);
                 },
                 child: Text(
                   "Студент",
@@ -63,7 +63,7 @@ class HomePage extends MainScreenView {
                     textColor: Colors.white,
 
                     onPressed: () {
-                        _mainScreenPresenter.goToCatalogMath(context);
+                        _mainScreenPresenter.goToCatalogTeacher(context);
                     },
                     child: Text(
                       "Преподаватель",

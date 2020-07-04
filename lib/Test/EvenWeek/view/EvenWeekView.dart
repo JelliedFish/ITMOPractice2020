@@ -3,8 +3,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Catalog/tasks/model/ProfilMathTaskModel.dart';
-import 'package:flutterapp/Catalog/variants/model/ProfilMathVariantsModel.dart';
+import 'package:flutterapp/Catalog/tasks/model/TaskModel.dart';
+import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
 import 'package:flutterapp/DataBase/DataBase.dart';
 import 'package:flutterapp/Test/EvenWeek/Timetable/presenter/TimtablePresenter.dart';
 import 'package:flutterapp/Test/EvenWeek/presenter/EvenWeekPresenter.dart';

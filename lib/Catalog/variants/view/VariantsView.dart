@@ -1,14 +1,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
 import 'package:flutterapp/Catalog/variants/presenter/VariantsPresenter.dart';
 import 'package:flutterapp/Catalog/variants/view/Item.dart';
 
 class VariantsView extends StatelessWidget{
 
   var _variantsPresenter;
+  var _variantsModel;
 
-  VariantsView(VariantsPresenter _variantsPresenter){
+  VariantsView(VariantsPresenter _variantsPresenter, VariantsModel variantsModel){
+    _variantsModel = variantsModel;
     this._variantsPresenter = _variantsPresenter;
   }
 
@@ -24,24 +27,17 @@ class VariantsView extends StatelessWidget{
       padding: EdgeInsets.only(top: 5),
       child: GridView.count(
         crossAxisCount: 3,
-        children: <Widget>[
-          new Item(0.75, "M32031", Color.fromRGBO(239, 87, 83, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "M3102", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "K2308", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.75, "M32031", Color.fromRGBO(239, 87, 83, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "M3102", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "K2308", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.75, "M32031", Color.fromRGBO(239, 87, 83, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "M3102", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "K2308", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.75, "M32031", Color.fromRGBO(239, 87, 83, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "M3102", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "K2308", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.75, "M32031", Color.fromRGBO(239, 87, 83, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "M3102", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-          new Item(0.34, "K2308", Color.fromRGBO(131, 34, 167, 1), _variantsPresenter.catalogPresenter),
-        ],
+        children: createWidgets()
       ),
     );
+  }
+
+
+  List<Widget> createWidgets(){
+    List<Widget> widgets = [];
+    for (var text in _variantsModel.catalogModel.groups){
+      widgets.add(new Item(text, _variantsPresenter.catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd, _variantsPresenter.catalogPresenter));
+    }
+    return widgets;
   }
 }

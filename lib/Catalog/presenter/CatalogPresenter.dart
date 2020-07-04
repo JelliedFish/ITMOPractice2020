@@ -30,7 +30,7 @@ class CatalogPresenter {
     _catalogView = CatalogView(this);
     _catalogModel = CatalogModel(this);
     _variantsPresenter = VariantsPresenter(this);
-    _tasksPresenter = TasksPresenter();
+    _tasksPresenter = TasksPresenter(this);
   }
 
   get catalogView => _catalogView;

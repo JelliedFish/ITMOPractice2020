@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CatalogModel{
 
-
+  List<String> _groups;
   var _catalogPresenter;
   var _amountOfAnswers = "ФИО преподавателя";
 
@@ -14,5 +14,13 @@ class CatalogModel{
     _amountOfAnswers = value;
   }
 
-  CatalogModel(this._catalogPresenter);
+  CatalogModel(this._catalogPresenter) {
+    _groups = ["M3205","M3203"]; //add from DB
+  }
+
+  List<String> get groups => _groups;
+
+  set groups(List<String> value) {
+    _groups = value;
+  }
 }
