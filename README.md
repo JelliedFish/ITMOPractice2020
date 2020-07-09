@@ -16,7 +16,7 @@
 
 3. После установки - создать проект, как это сделано здесь: [создание проекта](https://developer.android.com/training/basics/firstapp/creating-project "Для просмотра рекомендаций перейдите по ссылке")
 
-4. Зайти в AVD Manager и установить Эмулятор, подробнее здесь:  [установка]( https://developer.android.com/studio/run/managing-avds "Для просмотра рекомендаций перейдите по ссылке") 
+4. Зайти в AVD Manager и установить Эмулятор, подробнее здесь: [установка](https://developer.android.com/studio/run/managing-avds "Для просмотра рекомендаций перейдите по ссылке") 
 
 5. Скачать этот репозиторий и установить его.
 
