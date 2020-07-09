@@ -30,6 +30,7 @@ class CatalogViewState extends State<CatalogView> {
 
   @override
   void initState() {
+
     _isSelected = [true, false];
     super.initState();
   }
