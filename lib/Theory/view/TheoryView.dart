@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/tasks/model/TaskModel.dart';
 import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
-import 'package:flutterapp/DataBase/DataBase.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
 import 'package:flutterapp/Theory/presenter/TheoryPresenter.dart';
 
@@ -40,16 +39,8 @@ class TheoryView extends StatelessWidget {
               Text("${index+1} Задание", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
               onPressed:  (){
                 TheoryModel tm = new TheoryModel(index+1, "It's a theory of ${index+1} task ! ");
-                DBClient.db.insertTheory(tm);
-                  //TaskModel tm = new TaskModel(1, "first_task", "it's image", 1, 1);
-                  //DBClient.db.insertTask(tm);
-              //VariantModel vm = new VariantModel(1,["Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey"],["Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey","Hey"], 1, 1);
-                //DBClient.db.updateVariant(vm);
-                var info =  DBClient.db.getTheoryByID(index+1);
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context)=> TaskInfo( info,_theoryPresenter))
-                );
 
+                var info = "info";
               },
 
             ),

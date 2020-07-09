@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 
 class OddTimetableModel{
 
-  List<String> _subjects = ["Russian", "Federation"];
+  List<String> _subjects = [];
+
 
   OddTimetableModel(){
-   _subjects =  ["Russian", "Federation"];
+   _subjects =  [];
   }
 
   List<String> get subjects => _subjects;
@@ -22,5 +23,6 @@ class OddTimetableModel{
   set subjects(List<String> value) {
     _subjects = value;
   }
+
 
 }

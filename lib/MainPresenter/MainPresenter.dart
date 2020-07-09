@@ -48,8 +48,3 @@ class MainPresenter{
 
 
 }
-
-
-void main(){
-  var mainPresenter = MainPresenter();
-}

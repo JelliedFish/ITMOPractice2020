@@ -48,45 +48,11 @@ class CatalogViewState extends State<CatalogView> {
                     icon: Icon(Icons.highlight_off),
                     iconSize: 30,
                     onPressed: () {
+                      _catalogPresenter.mainPresenter.mainPresenterModel.name = null;
                       this._catalogPresenter.goBack(context);
                     },
                   ),
                   padding: EdgeInsets.only(left: 15),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-
-
-                  child: Text(
-                    _catalogPresenter.catalogModel.amountOfAnswers,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17),
-                  ),
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 10.0),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 4,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                    color: _catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
-                    border: new Border(),
-                    borderRadius: new BorderRadius.only(
-                        topLeft: Radius.circular(15.0),
-                        bottomLeft: Radius.circular(15.0),
-                        topRight: Radius.circular(0.0),
-                        bottomRight: Radius.circular(0.0)),
-                  ),
                 )
               ],
             ),

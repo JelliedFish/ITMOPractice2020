@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
@@ -24,14 +25,49 @@ class VariantsView extends StatelessWidget{
 
   Widget buildGridView(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 5),
-      child: GridView.count(
-        crossAxisCount: 3,
-        children: createWidgets()
-      ),
+        padding: EdgeInsets.only(top: 5),
+        child: StreamBuilder(
+          stream: Firestore.instance.collection("Groups").snapshots(),
+          builder: (context, snapshot){
+            if (!snapshot.hasData) return const Text('Loading...');
+            return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (_, index){
+                  return Center(
+                      child: GestureDetector(
+
+                        onLongPress: (){
+                          Firestore.instance.collection("Groups").document(snapshot.data.documents[index].documentID).delete();
+                        },
+                          onTap: () {
+                            _variantsPresenter.catalogPresenter.setGroupId(snapshot.data.documents[index].documentID);
+                            _variantsPresenter.catalogPresenter.mainPresenter.mainPresenterModel.visits = snapshot.data.documents[index]["visits"];
+                            _variantsPresenter.catalogPresenter.mainPresenter.mainPresenterModel.group_id = snapshot.data.documents[index].documentID;
+                            _variantsPresenter.catalogPresenter.goToTest(context);
+                          },
+                          child: Container(
+                              height: 100,
+                              width: 100,
+                              child: Card(
+                                  color:  _variantsPresenter.catalogPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+                                  elevation: 20,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Center(child: Text(
+                                    "${snapshot.data.documents[index]["group_name"]}",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))))));
+                });
+          },
+        )
     );
   }
-
 
   List<Widget> createWidgets(){
     List<Widget> widgets = [];

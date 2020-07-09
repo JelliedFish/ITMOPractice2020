@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Test/EvenWeek/Timetable/model/TimetableModel.dart';
@@ -35,66 +36,139 @@ class TimetableViewState extends State<EvenTimetableView> {
   var _info;
 
   get info => _info;
-  var  _evenWeekPresenter;
+  var _evenWeekPresenter;
   var _timetablePresenter;
   var _timetableModel;
   List<Container> litems = [];
+
+
   final TextEditingController eCtrl = new TextEditingController();
 
 
 
-
-  @override
-  void initState() {
-    for (var text in _timetableModel.subjects){
-      litems.add(createContainer(text, _evenWeekPresenter, context, _timetableModel));
-    }
-    super.initState();
-  }
-
-  TimetableViewState(String info, EvenWeekPresenter evenWeekPresenter, EvenTimetablePresenter timetablePresenter, EvenTimetableModel evenTimetableModel){
+  TimetableViewState(String info, EvenWeekPresenter evenWeekPresenter,
+      EvenTimetablePresenter timetablePresenter,
+      EvenTimetableModel evenTimetableModel) {
     _info = info;
     _evenWeekPresenter = evenWeekPresenter;
     _timetablePresenter = timetablePresenter;
     _timetableModel = evenTimetableModel;
-
   }
 
 
   @override
-  Widget build (BuildContext ctxt) {
+  Widget build(BuildContext ctxt) {
     return new Scaffold(
-        appBar: new AppBar(backgroundColor: _evenWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.themeColorEnd, title: Text("Предметы")),
-        body: new Column(
-          children: <Widget>[
-            new TextField(
-              controller: eCtrl,
-              onSubmitted: (text) {
-                litems.add(createContainer(text, _evenWeekPresenter,context,_timetableModel));
-                eCtrl.clear();
-                setState(() {});
-              },
-            ),
-            new Expanded(
-                child: new ListView.builder
-                  (
-                    itemCount: litems.length,
-                    itemBuilder: (BuildContext ctxt, int Index) {
-                      return litems[Index];
-                    }
-                )
-            )
-          ],
-        )
+        appBar: new AppBar(
+            backgroundColor: _evenWeekPresenter.testPresenter.mainPresenter
+                .mainPresenterModel.themeColorEnd, title: Text("Предметы")),
+        body: createColumn()
     );
   }
 
+  Widget createColumn() {
+    if (_timetablePresenter.evenWeekPresenter.mainPresenter.mainPresenterModel
+        .teacher) {
+      return new Column(
+        children: <Widget>[
+          new TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Введите предмет, чтобы добавить',
+            ),
+            controller: eCtrl,
+            onSubmitted: (text) {
+
+              Firestore.instance.collection("Lessons").add(
+                  {"title" : "${text}",
+                   "day_of_week" : "${info}",
+                    "group_id": "${ _evenWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.group_id}",
+                  "hometask" : "",
+                  "index": "",
+                  "teacher_id": "${_evenWeekPresenter.mainPresenter.mainPresenterModel.teacher_id}",
+                  "textbook": "",
+                  "textbook_ref": "",
+                  "theme": "",
+                  "time": "",
+                  "week" : "even",
+                  "zoom_link" : ""});
+
+
+              _evenWeekPresenter.testPresenter.testModel.week = "even";
+              eCtrl.clear();
+              setState(() {});
+            },
+          ),
+          new Expanded(
+              child: StreamBuilder(
+                  stream: Firestore.instance.collection("Lessons").where(
+                      "day_of_week", isEqualTo: info).where("week", isEqualTo: "even")
+                      .where("group_id",
+                      isEqualTo: _evenWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.group_id)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return const Text('Loading...');
+                    return  ListView.builder
+                      (
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (_, index) {
+                          if (_evenWeekPresenter.mainPresenter.mainPresenterModel.teacher){
+                          return Container(
+                              child :
+                           Dismissible(
+                              key: UniqueKey(),
+                              background: Container(color: Colors.red),
+                              onDismissed: (direction) {
+                                Firestore.instance.collection("Lessons").document(snapshot.data.documents[index].documentID).delete();
+                              },
+                        child: createContainer("${snapshot.data.documents[index]["title"]}",
+                             _evenWeekPresenter, _)
+
+                           ),
+                          );}
+                        else {
+                          return
+                            createContainer("${snapshot.data.documents[index]["title"]}",
+                                _evenWeekPresenter, _);
+                        };
+                        });
+                        }
+                  ))
+        ],
+      );
+    }
+    else {
+      return StreamBuilder(
+          stream: Firestore.instance.collection("Lessons").where(
+              "day_of_week", isEqualTo: info).where("week", isEqualTo: "even")
+              .where("group_id",
+              isEqualTo: _evenWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.group_id)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const Text('Loading...');
+            return new ListView.builder
+              (
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (_, index) {
+                  return createContainer(
+                      "${snapshot.data.documents[index]["title"]}",
+                      _evenWeekPresenter, _);
+                }
+            );
+          });
+    }
+  }
 }
 
 
-Widget createContainer(String text, EvenWeekPresenter evenWeekPresenter,BuildContext context, EvenTimetableModel timetableModel){
+
+Widget createContainer(String text, EvenWeekPresenter evenWeekPresenter,BuildContext context){
   return
 
+    Container(
+      width: 500,
+      padding: EdgeInsets.only(top: 10),
+  child:
     Container(
       height: 48,
       child: FlatButton
@@ -131,5 +205,5 @@ Widget createContainer(String text, EvenWeekPresenter evenWeekPresenter,BuildCon
       ),
 
 
-    );
+    ));
 }

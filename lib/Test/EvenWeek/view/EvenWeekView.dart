@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/tasks/model/TaskModel.dart';
 import 'package:flutterapp/Catalog/variants/model/VariantsModel.dart';
-import 'package:flutterapp/DataBase/DataBase.dart';
 import 'package:flutterapp/Test/EvenWeek/Timetable/presenter/TimtablePresenter.dart';
 import 'package:flutterapp/Test/EvenWeek/presenter/EvenWeekPresenter.dart';
 import 'package:flutterapp/Theory/model/ProfilMathTheoryModel.dart';
@@ -44,7 +43,7 @@ class EvenWeekView extends StatelessWidget {
                     child:
                     Text(whatTheDay(index), style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                     onPressed:  (){
-                      String info = "It's an info";
+                      String info = whatTheDay(index);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context)=> EvenTimetablePresenter(_evenWeekPresenter,info).timetableView
                       ));
@@ -79,7 +78,6 @@ class EvenWeekView extends StatelessWidget {
         ));
   }
 }
-
 
 String whatTheDay(int index){
   switch(index){

@@ -40,8 +40,7 @@ class OddWeekView extends StatelessWidget {
                     child:
                     Text(whatTheDay(index), style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                     onPressed:  (){
-                      TheoryModel tm = new TheoryModel(index+1, "It's a theory of ${index+1} task ! ");
-                      var info =  "It's an info";
+                     String info = whatTheDay(index);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context)=> OddTimetablePresenter(_oddWeekPresenter,info).timetableView
                       ));

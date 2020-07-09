@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Catalog/tasks/model/TaskModel.dart';
@@ -25,11 +26,10 @@ class TasksView extends StatelessWidget{
         child: FlatButton
         (
         shape:  RoundedRectangleBorder( borderRadius: new BorderRadius.circular(20.0)),
-    color: Colors.redAccent,
+    color: Colors.indigo,
     child:
     Text("Добавить группу", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
     onPressed:  (){
-    var info =  "It's an info";
    _showMyDialog(context);
     }
     ),)
@@ -41,9 +41,12 @@ class TasksView extends StatelessWidget{
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
+
+      child:  StreamBuilder(
+        stream: Firestore.instance.collection("Groups").snapshots(),
+        builder: (context, snapshot) {
         return AlertDialog(
-          title: Text('Создание занятия'),
+          title: Text('Создание группы'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -67,14 +70,17 @@ class TasksView extends StatelessWidget{
             FlatButton(
               child: Text('Подтвердить'),
               onPressed: () {
-                _addItem();
+                Firestore.instance.collection("Groups").add(
+                    {"group_name" : "${_addGroupController.text}",
+                    "visits":1}
+                );
                 Navigator.of(context).pop();
               },
             ),
           ],
         );
       },
-    );
+    ));
   }
 
   void _addItem(){

@@ -39,6 +39,7 @@ class TestViewState extends State<TestView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
                   child: IconButton(
@@ -46,13 +47,21 @@ class TestViewState extends State<TestView> {
                     icon: Icon(Icons.highlight_off),
                     iconSize: 30,
                     onPressed: () {
+                      if (!_testPresenter.mainPresenter.mainPresenterModel.teacher){
+                        _testPresenter.mainPresenter.mainPresenterModel.name = null;
+                      }
                       this._testPresenter.goBack(context);
                     },
                   ),
                   padding: EdgeInsets.only(left: 15),
-                )
+                ),
               ],
             ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[ createGroupButton() ],
+            )
               ],
             ),
     );
@@ -114,6 +123,33 @@ class TestViewState extends State<TestView> {
   }
 
 
+  Widget createGroupButton (){
+    if (_testPresenter.mainPresenter.mainPresenterModel.teacher) {
+      return Container(
+
+          padding: EdgeInsets.only(right: 15),
+          alignment: Alignment.centerRight,
+          child: IconButton(
+            icon: Icon(
+              Icons.group,
+              color: _testPresenter.mainPresenter.mainPresenterModel
+                  .themeColorEnd,
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      _testPresenter.groupPresenter
+                          .groupView
+                  ));
+            },
+          )
+      );
+    }
+    else {
+      return Container(color: Colors.transparent);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

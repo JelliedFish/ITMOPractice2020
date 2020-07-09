@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Test/EvenWeek/Timetable/presenter/TimtablePresenter.dart';
@@ -34,73 +35,148 @@ class OddTimetableViewState extends State<OddTimetableView> {
   var _info;
   List<Container> litems = [];
   final TextEditingController eCtrl = new TextEditingController();
+
   get info => _info;
-  var  _oddWeekPresenter;
+  var _oddWeekPresenter;
   var _timetablePresenter;
   var _timetableModel;
   List<Container> _subjects = [];
 
 
-
-
-  @override
-  void initState() {
-    for (var text in _timetableModel.subjects){
-      litems.add(createContainer(text, _oddWeekPresenter, context, _timetableModel));
-    }
-    super.initState();
-  }
-
-  OddTimetableViewState(String info, OddWeekPresenter oddWeekPresenter, OddTimetablePresenter timetablePresenter, OddTimetableModel oddTimetableModel){
+  OddTimetableViewState(String info, OddWeekPresenter oddWeekPresenter,
+      OddTimetablePresenter timetablePresenter,
+      OddTimetableModel oddTimetableModel) {
     _info = info;
     _oddWeekPresenter = oddWeekPresenter;
     _timetablePresenter = timetablePresenter;
     _timetableModel = oddTimetableModel;
   }
 
+
   @override
-  Widget build (BuildContext ctxt) {
+  Widget build(BuildContext ctxt) {
     return new Scaffold(
-        appBar: new AppBar(backgroundColor: _oddWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.themeColorEnd, title: Text("Предметы")),
-        body: new Column(
-          children: <Widget>[
-            new TextField(
-              controller: eCtrl,
-              onSubmitted: (text) {
-                litems.add(createContainer(text, _oddWeekPresenter, context, _timetableModel));
-                _timetableModel.subjects.add(text);
-                eCtrl.clear();
-                setState(() {});
-              },
-            ),
-            new Expanded(
-                child: new ListView.builder
-                  (
-                    itemCount: litems.length,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return litems[index];
-                    }
-                )
-            )
-          ],
-        )
+        appBar: new AppBar(
+            backgroundColor: _oddWeekPresenter.testPresenter.mainPresenter
+                .mainPresenterModel.themeColorEnd, title: Text("Предметы")),
+        body: createColumn()
     );
   }
 
+
+  Widget createColumn() {
+    if (_timetablePresenter.oddWeekPresenter.mainPresenter.mainPresenterModel
+        .teacher) {
+      return new Column(
+        children: <Widget>[
+          new TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Введите предмет, чтобы добавить',
+            ),
+            controller: eCtrl,
+            onSubmitted: (text) {
+              Firestore.instance.collection("Lessons").add(
+                  {"title": "${text}",
+                    "day_of_week": "${info}",
+                    "group_id": "${_oddWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.group_id}",
+                    "hometask": "",
+                    "index": "",
+                    "teacher_id": "",
+                    "textbook": "",
+                    "textbook_ref": "",
+                    "theme": "",
+                    "time": "",
+                    "week": "odd",
+                    "zoom_link": ""});
+
+              _oddWeekPresenter.testPresenter.testModel.week = "odd";
+              eCtrl.clear();
+              setState(() {});
+            },
+          ),
+          new Expanded(
+
+              child: StreamBuilder(
+                  stream: Firestore.instance.collection("Lessons").where(
+                      "day_of_week", isEqualTo: info).where("week", isEqualTo: "odd")
+                      .where("group_id",
+                      isEqualTo:  _oddWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.group_id)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return const Text('Loading...');
+                    return  ListView.builder
+                      (
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (_, index) {
+                          if (_oddWeekPresenter.mainPresenter.mainPresenterModel.teacher){
+                            return Container(
+                              child :
+                              Dismissible(
+                                  key: UniqueKey(),
+                                  background: Container(color: Colors.red),
+                                  onDismissed: (direction) {
+                                    Firestore.instance.collection("Lessons").document(snapshot.data.documents[index].documentID).delete();
+                                  },
+                                  child: createContainer("${snapshot.data.documents[index]["title"]}",
+                                      _oddWeekPresenter, _)
+
+                              ),
+                            );}
+                          else {
+                            return
+                              createContainer("${snapshot.data.documents[index]["title"]}",
+                                  _oddWeekPresenter, _);
+                          };
+                        });
+                  }))
+        ],
+      );
+    }
+    else {
+      return StreamBuilder(
+          stream: Firestore.instance.collection("Lessons").where(
+              "day_of_week", isEqualTo: info).where("week", isEqualTo: "odd")
+              .where("group_id",
+              isEqualTo: _oddWeekPresenter.testPresenter.mainPresenter.mainPresenterModel.group_id)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const Text('Loading...');
+            return new ListView.builder
+              (
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (_, index) {
+                  return createContainer(
+                      "${snapshot.data.documents[index]["title"]}",
+                      _oddWeekPresenter, _);
+                }
+            );
+          });
+    }
+  }
 }
 
-Widget createContainer(String text, OddWeekPresenter oddWeekPresenter,BuildContext context, OddTimetableModel timetableModel){
+
+Widget createContainer(String text, OddWeekPresenter oddWeekPresenter,BuildContext context){
   return
 
+
+  Container(
+      width: 500,
+
+      padding: EdgeInsets.only(top: 10),
+      child:
     Container(
       height: 48,
       child: FlatButton
         (
+
         shape:  RoundedRectangleBorder( borderRadius: new BorderRadius.circular(20.0)),
         color: Colors.transparent,
         child:
         Text(text, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
         onPressed:  (){
+
           oddWeekPresenter.testPresenter.subjectPresenter.subjectModel.subject = text;
           Navigator.push(context,
               MaterialPageRoute(builder: (context)=> oddWeekPresenter.testPresenter.subjectPresenter.subjectView)
@@ -110,6 +186,7 @@ Widget createContainer(String text, OddWeekPresenter oddWeekPresenter,BuildConte
 
       ),
       decoration: BoxDecoration(
+
         gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -128,5 +205,5 @@ Widget createContainer(String text, OddWeekPresenter oddWeekPresenter,BuildConte
       ),
 
 
-    );
+    ));
 }

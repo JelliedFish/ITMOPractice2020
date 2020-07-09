@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 
 class EvenTimetableModel{
 
-  List<String> _subjects = ["Russian", "Federation"];
+  var _dayOfTheWeek;
+
+  List<String> _subjects = [];
 
   EvenTimetableModel(){
-    _subjects =  ["Russian", "Federation"];
+    _subjects =  [];
   }
 
   List<String> get subjects => _subjects;
@@ -23,4 +25,9 @@ class EvenTimetableModel{
     _subjects = value;
   }
 
+  get dayOfTheWeek => _dayOfTheWeek;
+
+  set dayOfTheWeek(value) {
+    _dayOfTheWeek = value;
+  }
 }

@@ -42,7 +42,7 @@ class _MainPresenterView extends State<MainPresenterView> {
       body: tabs[_cIndex],
         bottomNavigationBar:BottomNavigationBar(
           currentIndex: _cIndex,
-          fixedColor: Colors.black87,
+          fixedColor: Colors.indigo,
           unselectedItemColor: Colors.grey,
           type: BottomNavigationBarType.fixed ,
           items: [

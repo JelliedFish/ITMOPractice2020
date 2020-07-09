@@ -14,6 +14,7 @@ class EvenTimetablePresenter{
   var _timetableModel;
 
 
+
   get timetableView => _timetableView;
   var _evenWeekPresenter;
 
@@ -23,6 +24,7 @@ class EvenTimetablePresenter{
     _evenWeekPresenter = evenWeekPresenter;
     _timetableModel = new EvenTimetableModel();
     _timetableView = new EvenTimetableView(info, evenWeekPresenter, this,_timetableModel);
+    _evenWeekPresenter.testPresenter.testModel.dayOfTheWeek = info;
 
   }
 

@@ -16,10 +16,10 @@ class SubjectPresenter {
   SubjectPresenter(TestPresenter testPresenter){
     _testPresenter = testPresenter;
     if (_subject != null) {
-      _subjectModel = new SubjectModel.empty(_subject);
+      _subjectModel = new SubjectModel.empty(_subject,this);
     }
     else {
-      _subjectModel = new SubjectModel.empty("Урок не задан");
+      _subjectModel = new SubjectModel.empty("Урок не задан",this);
     }
     _subjectView = new SubjectView(this,_subjectModel);
   }

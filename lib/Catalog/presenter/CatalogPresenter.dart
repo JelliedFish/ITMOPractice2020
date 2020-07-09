@@ -41,24 +41,26 @@ class CatalogPresenter {
     switch (_state) {
       case "Student":
         {
+          _mainPresenter.mainPresenterModel.teacher = false;
           _mainPresenter.mainPresenterModel.themeColorEnd = Colors.indigo;
           _mainPresenter.mainPresenterModel.themeColorStart = Colors.indigo;
-          _mainPresenter.mainPresenterModel.amountOfTasks = 26;
+
         }
         break;
 
       case "Teacher":
         {
-          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.redAccent;
-          _mainPresenter.mainPresenterModel.themeColorStart = Colors.redAccent;
-          _mainPresenter.mainPresenterModel.amountOfTasks = 12;
+
+          _mainPresenter.mainPresenterModel.teacher = true;
+          _mainPresenter.mainPresenterModel.themeColorEnd = Colors.indigo;
+          _mainPresenter.mainPresenterModel.themeColorStart = Colors.indigo;
         }
         break;
 
       default:
         {
-          _catalogModel._color = Colors.redAccent;
-        }
+          _mainPresenter.mainPresenterModel.themeColorEnd = const Color(0xff2980b9);
+          _mainPresenter.mainPresenterModel.themeColorStart = const Color(0xff2980b9);        }
     }
   }
 
@@ -67,6 +69,10 @@ class CatalogPresenter {
       MaterialPageRoute(builder: (context) => _mainPresenter.testPresenter.testView),
     );
   }
+  void setGroupId(String id){
+    _mainPresenter.testPresenter.testModel.group = id;
+  }
+  
 
   void goBack(BuildContext context) {
     Navigator.pop(context);

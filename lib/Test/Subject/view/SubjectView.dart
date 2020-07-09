@@ -4,9 +4,15 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Test/Subject/model/SubjectModel.dart';
 import 'package:flutterapp/Test/Subject/presenter/SubjectPresenter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+
+
 
 class SubjectView extends StatefulWidget{
   var _subjectPresenter;
@@ -28,9 +34,8 @@ class SubjectViewState extends State<SubjectView> {
  var _subjectPresenter;
  var _subjectModel;
 
- var _dayTimetablePresenter;
  TextEditingController _titleController;
- TextEditingController _teacherName;
+ TextEditingController _date;
  TextEditingController _textBook;
  TextEditingController _textBookRef;
  TextEditingController _description;
@@ -45,8 +50,9 @@ class SubjectViewState extends State<SubjectView> {
  @override
  void initState() {
    super.initState();
+   _subjectPresenter.subjectModel.setData();
    _titleController = TextEditingController();
-   _teacherName = TextEditingController();
+   _date = TextEditingController();
    _textBook = TextEditingController();
    _textBookRef = TextEditingController();
    _description = TextEditingController();
@@ -58,7 +64,7 @@ class SubjectViewState extends State<SubjectView> {
  @override
  void dispose() {
    _titleController.dispose();
-   _teacherName.dispose();
+   _date.dispose();
    _textBook.dispose();
    _textBookRef.dispose();
    _description.dispose();
@@ -67,28 +73,37 @@ class SubjectViewState extends State<SubjectView> {
    super.dispose();
  }
 
+ Widget createIconButton(){
+   if(_subjectPresenter.testPresenter.mainPresenter.mainPresenterModel.teacher) {
+     return Container(
+         alignment: Alignment.centerRight,
+         child: IconButton(
+           icon: Icon(
+             Icons.edit,
+             color: _subjectPresenter.testPresenter.mainPresenter
+                 .mainPresenterModel.themeColorEnd,
+           ),
+           onPressed: () {
+             _showMyDialog(context);
+           },
+         )
+     );
+   }
+   else {
+     return Container(color: Colors.transparent);
+   }
+ }
  @override
   Widget build (BuildContext ctxt) {
     return new Scaffold(
-        appBar: new AppBar(backgroundColor: _subjectPresenter.testPresenter.mainPresenter.mainPresenterModel.themeColorEnd, title: Text("Описание")),
+        appBar: new AppBar(backgroundColor: _subjectPresenter.testPresenter.mainPresenter.mainPresenterModel.themeColorEnd, title: Text("Описание" +" "+ _subjectPresenter.subjectModel.subject)),
         body: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
                 new Expanded(child: Row(
                   children: <Widget>[
-                    Container(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.edit,
-                            color: _subjectPresenter.testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
-                          ),
-                          onPressed: () {
-                            _showMyDialog(context);
-                          },
-                        )
-                    )
+                    createIconButton()
                   ],
                 ),
                   flex: 1,),
@@ -112,11 +127,31 @@ class SubjectViewState extends State<SubjectView> {
                           child:
                           Text(whatTheData(index), style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
                           onPressed:  (){
-                            var info =  "It's an info";
                             showDialog(context: context,
                                 barrierDismissible: true,
                                 builder: (BuildContext context){
-                                  return dataWidget(context, index,_subjectModel);
+                                  return  FutureBuilder<Widget>(
+
+                                    future: dataWidget(context, index,_subjectModel),
+                                    builder: (context, AsyncSnapshot<Widget> snapshot){
+                                      Widget children;
+                                      if (snapshot.hasData){
+                                        children = snapshot.data;
+                                      }
+                                      else {
+                                          children =
+                                      Center(child:SizedBox(
+                                      child: CircularProgressIndicator(
+                                        backgroundColor: _subjectPresenter.testPresenter.mainPresenter.mainPresenterModel.themeColorEnd,
+                                        valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+                                      ),
+                                      width: 60,
+                                      height: 60,
+                                      ));
+                                      }
+                                      return children;
+                                    }
+                                  );
                                 }
                             );
                           }
@@ -152,55 +187,64 @@ class SubjectViewState extends State<SubjectView> {
 
 
  Future<void> _showMyDialog(BuildContext context) async {
+
+   _date..text = _subjectPresenter.subjectModel.date;
+   _textBook..text = _subjectPresenter.subjectModel.textBook;
+   _textBookRef..text = _subjectPresenter.subjectModel.textBookRef;
+   _description..text = _subjectPresenter.subjectModel.description;
+   _homework..text = _subjectPresenter.subjectModel.homework;
+   _zoomRef..text = _subjectPresenter.subjectModel.zoomRef;
+
    return showDialog<void>(
      context: context,
      barrierDismissible: false, // user must tap button!
      builder: (BuildContext context) {
        return AlertDialog(
-         title: Text('Создание занятия'),
+         title: Text('Редактирование занятия'),
          content: SingleChildScrollView(
            child: ListBody(
              children: <Widget>[
                TextField(
-                 controller: _teacherName,
+                 controller: _date,
                  decoration: InputDecoration(//
                    border: OutlineInputBorder(),
-                   labelText: 'ФИО преподавателя',
+                   hintText: 'Время занятия',
                  ),
                ),
                TextField(
                  controller: _textBook,
                  decoration: InputDecoration(
                    border: OutlineInputBorder(),
-                   labelText: 'Название учебника',
+                   hintText: 'Название учебника',
                  ),
                ),
                TextField(
                  controller: _textBookRef,
                  decoration: InputDecoration(
                    border: OutlineInputBorder(),
-                   labelText: 'Ссылка на учебник',
+                   hintText: 'Ссылка на учебник',
                  ),
                ),
                TextField(
                  controller: _description,
                  decoration: InputDecoration(
                    border: OutlineInputBorder(),
-                   labelText: 'Описание занятия',
+                   hintText: 'Описание занятия',
                  ),
                ),
                TextField(
                  controller: _homework,
                  decoration: InputDecoration(
                    border: OutlineInputBorder(),
-                   labelText: 'Домашнее задание',
+                   hintText: 'Домашнее задание',
                  ),
                ),
                TextField(
+
                  controller: _zoomRef,
                  decoration: InputDecoration(
                    border: OutlineInputBorder(),
-                   labelText: 'Ссылка на Zoom',
+                   hintText: 'Ссылка на Zoom',
                  ),
                ),
              ],
@@ -226,21 +270,152 @@ class SubjectViewState extends State<SubjectView> {
    );
  }
 
- void _addItem(){
+ void _addItem() async {
    setState(() {
-
-          _subjectModel.titleController = _titleController.text;
-          _subjectModel.teacherName =  _teacherName.text;
-          _subjectModel.textBook = _textBook.text;
-           _subjectModel.textBookRef =_textBookRef.text;
-          _subjectModel.description = _description.text;
-          _subjectModel.homework = _homework.text;
-          _subjectModel.zoomRef = _zoomRef.text;
+      _subjectPresenter.subjectModel.setDataDB(context, _date.text , _textBook.text, _textBookRef.text, _description.text, _homework.text, _zoomRef.text);
+      _subjectModel.titleController = _titleController.text;
    });
  }
 
 }
 
+
+
+Widget createDescription(text){
+
+      return
+        Container(
+            padding: EdgeInsets.only(top:10),
+            child :
+        Container(
+        color: Colors.indigo,
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+          FlatButton
+        (
+          color: Colors.indigo ,
+          child: Container(padding: EdgeInsets.only(top:8,bottom: 8),
+          child :  Text(text, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),),
+
+
+        ),
+  ]
+  )));
+}
+
+
+Widget createDescriptionBookLink(text,link, SubjectModel subjectModel){
+
+  return
+
+    Container(
+        padding: EdgeInsets.only(),
+        child :
+        Container(
+            color: Colors.indigo,
+            child:
+            FlatButton
+              (
+              color: Colors.indigo ,
+              child: Container(padding: EdgeInsets.only(top:8,bottom: 8),
+                  child :  new RichText(
+                    text: new TextSpan(
+                      children: [
+                        new TextSpan(
+                          text:
+                          'Ссылка на ресурс',
+                          style: new TextStyle(
+                              color: Colors
+                                  .white,
+                              fontSize: 15),
+                          recognizer:
+                          new TapGestureRecognizer()
+                            ..onTap =
+                                () async {
+                              try {
+                                launch(
+                                    link
+                                );
+                              }
+                              catch(exception){
+                                FlutterToast.showToast(
+                                    msg: "Ссылка не работает !",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.indigo,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+                              }
+                            },
+                        ),
+                      ],
+                    ),
+                  )
+
+              ) ,
+
+            )));
+}
+
+
+Widget createDescriptionZoomLink(text,link, SubjectModel subjectModel){
+
+  return
+
+    Container(
+        padding: EdgeInsets.only(),
+        child :
+        Container(
+            color: Colors.indigo,
+            child:
+                  FlatButton
+                    (
+                    color: Colors.indigo ,
+                    child: Container(padding: EdgeInsets.only(top:8,bottom: 8),
+                      child :  new RichText(
+                        text: new TextSpan(
+                          children: [
+                            new TextSpan(
+                              text:
+                              'Ссылка на ресурс',
+                              style: new TextStyle(
+                                  color: Colors
+                                      .white,
+                                  fontSize: 15),
+                              recognizer:
+                              new TapGestureRecognizer()
+                                ..onTap =
+                                    () async {
+                                try {
+                                  launch(
+                                      link
+                                  );
+                                }
+                                catch(exception){
+                                  FlutterToast.showToast(
+                                      msg: "Ссылка не работает !",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.indigo,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0
+                                  );
+                                }
+                                  subjectModel.setVisits();
+                                    },
+                            ),
+                          ],
+                        ),
+                      )
+
+                  ) ,
+
+            )));
+}
 
 String whatTheData(int index){
 
@@ -260,15 +435,17 @@ String whatTheData(int index){
 }
 
 
-Widget dataWidget (BuildContext context , int index, SubjectModel subjectModel) {
+
+Future<Widget> dataWidget (BuildContext context , int index, SubjectModel subjectModel) async {
+  await subjectModel.setData();
+
   switch (index) {
     case 0:
       return AlertDialog(
         backgroundColor: Colors.white,
-        title: Text("Дамашнее задание:"),
-        content: Text(
-            subjectModel.homework,
-            textAlign: TextAlign.center),
+        title: Text("Домашнее задание:"),
+        content:
+            createDescription("Домашнее заданиие: \n\n"+subjectModel.homework),
         actions: <Widget>[
           FlatButton(
             child: Text('OK', style: TextStyle(
@@ -283,14 +460,17 @@ Widget dataWidget (BuildContext context , int index, SubjectModel subjectModel) 
       return AlertDialog(
         backgroundColor: Colors.white,
         title: Text("Описание занятия:"),
-        content: Text(
-            "Имя преподавателя: "+subjectModel.teacherName+"\n" +
-                "Тема занятия: "+subjectModel.titleController+"\n"+
-                "Описание: "+subjectModel.description+"\n"+
-                "Учебник: "+subjectModel.textBook+"\n"+
-                "Ссылка на учебник: "+subjectModel.textBookRef+"\n",
-
-            textAlign: TextAlign.center),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              createDescription("Имя преподавателя: \n\n"+subjectModel.teacherName),
+              createDescription("Описание: \n\n"+subjectModel.description),
+              createDescription("Учебник: \n\n"+subjectModel.textBook),
+              createDescriptionBookLink("Ссылка на учебник: \n\n"+subjectModel.textBookRef,subjectModel.textBookRef, subjectModel),
+              createDescription("Время начала: \n\n"+subjectModel.date),
+            ],
+          ),
+        ),
         actions: <Widget>[
           FlatButton(
             child: Text('OK', style: TextStyle(
@@ -306,9 +486,8 @@ Widget dataWidget (BuildContext context , int index, SubjectModel subjectModel) 
       return AlertDialog(
         backgroundColor: Colors.white,
         title: Text("Ссылка на Zoom:"),
-        content: Text(
-            subjectModel.zoomRef,
-            textAlign: TextAlign.center),
+        content:
+            createDescriptionZoomLink("Ссылка на урок: \n\n"+ subjectModel.zoomRef, subjectModel.textBookRef, subjectModel),
         actions: <Widget>[
           FlatButton(
             child: Text('OK', style: TextStyle(
