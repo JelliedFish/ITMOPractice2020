@@ -20,7 +20,7 @@
 
 5. Скачать этот репозиторий и установить его.
 
-6. Установить Flutter SDK и Flutter Plugin, полная инструкция здесь:  [установка](https://flutter.dev/docs/get-started/install/window" Для просмотра рекомендаций перейдите по ссылке") 
+6. Установить Flutter SDK и Flutter Plugin, полная инструкция здесь: [установка]( https://flutter.dev/docs/get-started/install/window "Для просмотра  рекомендаций перейдите по ссылке")
 
 7. Поставить точкой запуска приложения файл main.dart.
 
