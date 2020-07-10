@@ -2,7 +2,7 @@
 # Способ №1
 Для того, чтобы установить / запустить приложение  достаточно:
 
-1. скачать APK-файл на устройство с Android OS: [apk-файл](https://drive.google.com/file/d/1p9NG_5go859X_wE9QERTA31eEhzFpe2W/view?usp=sharing "Для скачивания перейдите по ссылке")
+1. скачать APK-файл на устройство с Android OS: [apk-файл](https://drive.google.com/file/d/12nfcPzI35YfBKuwBNzrZFPxW2KBlBGGl/view?usp=sharing "Для скачивания перейдите по ссылке")
 
 2. установить приложение на этом устройстве, следуя инструкциям.
 
